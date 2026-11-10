@@ -374,37 +374,35 @@ function renderItems(){
 }
 
 function loadSetupData(data){
-  // 1. ملء المشاريع
-  const sel = document.getElementById('projectName');
-  sel.innerHTML = '<option value="">— اختر المشروع —</option>' +
-    (data.projects||[]).map(p=>`<option value="${p.name}" data-no="${p.no}" data-site="${p.site||''}" data-addr="${p.addr||''}">${p.name}</option>`).join('');
+  // 1. ملء قائمة المشاريع (مستقلة)
+  const projSel = document.getElementById('projectName');
+  projSel.innerHTML = '<option value="">— اختر المشروع —</option>' +
+    (data.projects||[]).map(p=>`<option value="${p.name}" data-no="${p.no||''}">${p.name}</option>`).join('');
   
-  sel.addEventListener('change', e=>{
-    const opt = e.target.selectedOptions[0];
-    if (!opt) return;
-    if (opt.dataset.site) {
-        document.getElementById('siteName').value = opt.dataset.site;
-    }
-    if (opt.dataset.addr) document.getElementById('siteAddress').value = opt.dataset.addr;
-  });
-
-  // 2. ملء المراكز
+  // 2. ملء قائمة المراكز (مستقلة)
   const siteSel = document.getElementById('siteName');
   siteSel.innerHTML = '<option value="">— اختر المركز —</option>' + 
     (data.sites||[]).map(s => `<option value="${s}">${s}</option>`).join('');
 
-  // 3. ملء أسماء الزوار
+  // 3. ملء قائمة العناوين (مستقلة)
+  const addrSel = document.getElementById('siteAddress');
+  if(addrSel) {
+      addrSel.innerHTML = '<option value="">— اختر العنوان —</option>' + 
+        (data.addresses||[]).map(a => `<option value="${a}">${a}</option>`).join('');
+  }
+
+  // 4. ملء قائمة الزوار (مستقلة)
   const visitSel = document.getElementById('visitName');
   visitSel.innerHTML = '<option value="">— اختر الزائر —</option>' + 
-    (data.teachers||[]).map(t => `<option value="${t}">${t}</option>`).join('');
+    (data.visitors||[]).map(v => `<option value="${v}">${v}</option>`).join('');
 
-  // التعبئة التلقائية للتوقيع والمنسق
+  // التعبئة التلقائية (عند اختيار الزائر من القائمة)
   visitSel.addEventListener('change', function() {
       document.getElementById('signature').value = this.value;
       document.getElementById('coordinatorName').value = this.value;
   });
 }
-
+  
 function collectForm(){
   const items = Array.from(document.querySelectorAll('.item')).map(el=>({
     result: el.dataset.value || '',
