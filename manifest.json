@@ -2,6 +2,7 @@
   "name": "زيارات ميدانية",
   "short_name": "زيارات",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f0f4f8",
@@ -9,6 +10,17 @@
   "dir": "rtl",
   "lang": "ar",
   "icons": [
-    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+    {
+      "src": "icon-192.png",
+      "sizes": "192x195",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x521",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
   ]
 }
