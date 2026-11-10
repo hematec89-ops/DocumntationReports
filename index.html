@@ -855,6 +855,15 @@ async function init(){
   document.getElementById('filterDay').addEventListener('change', ()=>searchReports(false));
   document.getElementById('filterMonth').addEventListener('change', ()=>searchReports(false));
 
+    // 1. محاولة تحميل القوائم من الذاكرة المحلية أولاً (للعمل بدون إنترنت)
+  try {
+    const cachedSetup = localStorage.getItem('cache_setup');
+    if (cachedSetup) {
+      loadSetupData(JSON.parse(cachedSetup));
+    }
+  } catch(e) { console.warn('Failed to load cached setup', e); }
+
+  // 2. إذا كان هناك إنترنت، نقوم بتحديث القوائم وحفظها في الذاكرة
   if (navigator.onLine){
     try {
       const r = await fetch(API_URL, {
@@ -863,7 +872,10 @@ async function init(){
         body: JSON.stringify({action:'getSetup'})
       });
       const data = await r.json();
-      if (data.ok) loadSetupData(data); // تمرير البيانات كاملة
+      if (data.ok) {
+        loadSetupData(data); // تحديث الواجهة
+        localStorage.setItem('cache_setup', JSON.stringify(data)); // حفظ نسخة للعمل offline
+      }
     } catch(e){ console.warn('setup load failed', e); }
   }
 
