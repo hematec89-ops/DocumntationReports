@@ -16,6 +16,30 @@
   .dot{width:8px;height:8px;border-radius:50%;background:#4ade80}
   .dot.off{background:#f87171}
 
+  /* تنسيق زر التثبيت */
+  #installBtn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 8px;
+    padding: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+  }
+  #installBtn:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+  #installBtn img {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+  }
+  .hidden {
+    display: none !important;
+  }
+
   .tab-content{display:none}
   .tab-content.active{display:block}
 
@@ -113,9 +137,14 @@
 </style>
 </head>
 <body>
-
 <header>
   <h1>زيارات ميدانية</h1>
+  
+  <!-- زر التثبيت -->
+  <button id="installBtn" class="hidden" title="تثبيت التطبيق">
+    <img src="icon-192.png" alt="تثبيت">
+  </button>
+
   <span class="status">
     <span class="dot" id="statusDot"></span>
     <span id="statusText">متصل</span>
@@ -157,7 +186,12 @@
           <option value="">— اختر المركز —</option>
         </select>
       </div>
-      <div><label>العنوان</label><input id="siteAddress"></div>
+      <div><label>العنوان</label>
+        <!-- تم إصلاح هذا الحقل ليكون قائمة منسدلة -->
+        <select id="siteAddress">
+          <option value="">— اختر العنوان —</option>
+        </select>
+      </div>
     </div>
   </div>
 
@@ -853,7 +887,7 @@ async function init(){
   document.getElementById('filterDay').addEventListener('change', ()=>searchReports(false));
   document.getElementById('filterMonth').addEventListener('change', ()=>searchReports(false));
 
-    // 1. محاولة تحميل القوائم من الذاكرة المحلية أولاً (للعمل بدون إنترنت)
+  // 1. محاولة تحميل القوائم من الذاكرة المحلية أولاً (للعمل بدون إنترنت)
   try {
     const cachedSetup = localStorage.getItem('cache_setup');
     if (cachedSetup) {
@@ -878,6 +912,40 @@ async function init(){
   }
 
   setInterval(()=>{ if (navigator.onLine) syncAll(); }, 60000);
+}
+
+/*************************************************************
+ * 10) تفعيل زر تثبيت التطبيق (PWA Install)
+ *************************************************************/
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  const installBtn = document.getElementById('installBtn');
+  if (installBtn) {
+    installBtn.classList.remove('hidden');
+  }
+});
+
+document.getElementById('installBtn')?.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    deferredPrompt = null;
+    document.getElementById('installBtn').classList.add('hidden');
+  }
+});
+
+window.addEventListener('appinstalled', () => {
+  console.log('PWA was installed');
+  document.getElementById('installBtn').classList.add('hidden');
+});
+
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+  document.getElementById('installBtn')?.classList.add('hidden');
 }
 
 document.addEventListener('DOMContentLoaded', init);
