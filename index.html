@@ -577,7 +577,7 @@ function collectForm(){
     fromTime:   document.getElementById('fromTime').value,
     toTime:     document.getElementById('toTime').value,
     projectName:document.getElementById('projectName').value,
-    projectNo:  (document.getElementById('projectName').selectedOptions[0]||{}).dataset?.no || '',
+    projectNo:  (document.getElementById('projectName').selectedOptions[0] && document.getElementById('projectName').selectedOptions[0].dataset) ? document.getElementById('projectName').selectedOptions[0].dataset.no : '',
     siteName:   document.getElementById('siteName').value.trim(),
     siteAddress:document.getElementById('siteAddress').value.trim(),
     items,
@@ -1137,63 +1137,92 @@ async function init(){
     }
   }
 }
-
 async function initAppLogic(){
-  const auth = JSON.parse(localStorage.getItem('auth_user'));
-  if(auth) {
-      document.getElementById('visitName').value = auth.fullName;
-      document.getElementById('coordinatorName').value = auth.fullName;
-      document.getElementById('signature').value = auth.fullName;
-      document.getElementById('currentUserDisplay').textContent = auth.fullName;
-  }
-
-  await openDB();
-  renderItems();
-  resetForm();
-  updateStatus();
-  await refreshPending();
-  await loadCenters();
-
-  document.querySelectorAll('#bottomNav button').forEach(b=>{
-    b.addEventListener('click', ()=>switchTab(b.dataset.tab));
-  });
-
-  document.getElementById('btnSave').addEventListener('click', saveLocal);
-  document.getElementById('btnSync').addEventListener('click', syncAll);
-  document.getElementById('btnSearch').addEventListener('click', ()=>searchReports(true));
-  document.getElementById('filterCenter').addEventListener('change', ()=>searchReports(false));
-  document.getElementById('filterDay').addEventListener('change', ()=>searchReports(false));
-  document.getElementById('filterMonth').addEventListener('change', ()=>searchReports(false));
-
-  document.getElementById('siteName').addEventListener('change', calculateAttendance);
-  document.getElementById('attAM').addEventListener('input', calculateAttendance);
-  document.getElementById('attPM').addEventListener('input', calculateAttendance);
-
   try {
-    const cachedSetup = localStorage.getItem('cache_setup');
-    if (cachedSetup) {
-      loadSetupData(JSON.parse(cachedSetup));
-    }
-  } catch(e) { console.warn('Failed to load cached setup', e); }
-
-  if (navigator.onLine){
+    // 1. التحقق الآمن من جلسة الدخول
+    let auth = null;
     try {
-      const r = await fetch(API_URL, {
-        method:'POST',
-        headers:{'Content-Type':'text/plain;charset=utf-8'},
-        body: JSON.stringify({action:'getSetup'})
-      });
-      const data = await r.json();
-      if (data.ok) {
-        loadSetupData(data);
-        localStorage.setItem('cache_setup', JSON.stringify(data));
+      const authStr = localStorage.getItem('auth_user');
+      if (authStr) auth = JSON.parse(authStr);
+    } catch (e) {
+      console.warn('خطأ في قراءة جلسة الدخول، سيتم مسحها.');
+      localStorage.removeItem('auth_user');
+      location.reload(); // إعادة تحميل لإظهار شاشة الدخول
+      return;
+    }
+
+    if(auth) {
+        document.getElementById('visitName').value = auth.fullName;
+        document.getElementById('coordinatorName').value = auth.fullName;
+        document.getElementById('signature').value = auth.fullName;
+        document.getElementById('currentUserDisplay').textContent = auth.fullName;
+    }
+
+    // 2. محاولة فتح قاعدة البيانات (مع الحماية)
+    try {
+      await openDB();
+    } catch (dbErr) {
+      console.error("فشل فتح قاعدة البيانات:", dbErr);
+      alert("تنبيه: مساحة التخزين ممتلئة أو هناك مشكلة في المتصفح. قد لا يعمل الحفظ بدون إنترنت.");
+    }
+
+    renderItems();
+    resetForm();
+    updateStatus();
+    await refreshPending();
+    await loadCenters();
+
+    document.querySelectorAll('#bottomNav button').forEach(b=>{
+      b.addEventListener('click', ()=>switchTab(b.dataset.tab));
+    });
+
+    document.getElementById('btnSave').addEventListener('click', saveLocal);
+    document.getElementById('btnSync').addEventListener('click', syncAll);
+    document.getElementById('btnSearch').addEventListener('click', ()=>searchReports(true));
+    document.getElementById('filterCenter').addEventListener('change', ()=>searchReports(false));
+    document.getElementById('filterDay').addEventListener('change', ()=>searchReports(false));
+    document.getElementById('filterMonth').addEventListener('change', ()=>searchReports(false));
+
+    document.getElementById('siteName').addEventListener('change', calculateAttendance);
+    document.getElementById('attAM').addEventListener('input', calculateAttendance);
+    document.getElementById('attPM').addEventListener('input', calculateAttendance);
+
+    // 3. تحميل القوائم المحفوظة
+    try {
+      const cachedSetup = localStorage.getItem('cache_setup');
+      if (cachedSetup) {
+        loadSetupData(JSON.parse(cachedSetup));
       }
-    } catch(e){ console.warn('setup load failed', e); }
+    } catch(e) { console.warn('Failed to load cached setup', e); }
+
+    // 4. جلب القوائم من السيرفر
+    if (navigator.onLine){
+      try {
+        const r = await fetch(API_URL, {
+          method:'POST',
+          headers:{'Content-Type':'text/plain;charset=utf-8'},
+          body: JSON.stringify({action:'getSetup'})
+        });
+        const data = await r.json();
+        if (data.ok) {
+          loadSetupData(data);
+          localStorage.setItem('cache_setup', JSON.stringify(data));
+        }
+      } catch(e){ console.warn('setup load failed', e); }
+    }
+
+    setInterval(()=>{ if (navigator.onLine) syncAll(); }, 60000);
+
+  } catch (globalErr) {
+    // إذا حدث أي خطأ غير متوقع، سيظهر هنا ولن يغلق التطبيق
+    document.body.innerHTML = `<div style="padding:20px; text-align:center; color:red; direction:rtl;">
+      <h2>حدث خطأ أثناء التشغيل</h2>
+      <p>${globalErr.message}</p>
+      <button onclick="location.reload()" style="padding:10px; margin-top:10px;">إعادة المحاولة</button>
+    </div>`;
+    console.error(globalErr);
   }
-
-  setInterval(()=>{ if (navigator.onLine) syncAll(); }, 60000);
 }
-
 /*************************************************************
  * 10) تفعيل زر تثبيت التطبيق (PWA Install)
  *************************************************************/
@@ -1206,14 +1235,17 @@ window.addEventListener('beforeinstallprompt', (e) => {
   if (installBtn) installBtn.classList.remove('hidden');
 });
 
-document.getElementById('installBtn')?.addEventListener('click', async () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    document.getElementById('installBtn').classList.add('hidden');
-  }
-});
+const instBtn = document.getElementById('installBtn');
+if (instBtn) {
+  instBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      instBtn.classList.add('hidden');
+    }
+  });
+}
 
 window.addEventListener('appinstalled', () => {
   document.getElementById('installBtn').classList.add('hidden');
