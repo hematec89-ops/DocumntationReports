@@ -361,8 +361,9 @@
 <div id="printArea"></div>
 
 <div class="toast" id="toast"></div>
+
 <script>
-  alert("1. تم تحميل الكود بنجاح!"); // <--- أضف هذا السطر هنا
+/*************************************************************
  * 1) إعدادات
  *************************************************************/
 const API_URL = 'https://script.google.com/macros/s/AKfycbwPiKRJqQKXs-kO7vHURVSkPjQnikcSgNKtSExX6l_WXfT7g0r12XF8Q6K2-P7z6uWY/exec';
@@ -493,17 +494,14 @@ function renderItems(){
 }
 
 function loadSetupData(data){
-  // 1. ملء قائمة المشاريع
   const projSel = document.getElementById('projectName');
   projSel.innerHTML = '<option value="">— اختر المشروع —</option>' +
     (data.projects||[]).map(p=>`<option value="${p.name}" data-no="${p.no||''}">${p.name}</option>`).join('');
   
-  // 2. ملء قائمة المراكز
   const siteSel = document.getElementById('siteName');
   siteSel.innerHTML = '<option value="">— اختر المركز —</option>' + 
     (data.sites||[]).map(s => `<option value="${s.name}" data-am="${s.totalAM}" data-pm="${s.totalPM}">${s.name}</option>`).join('');
 
-  // 3. ملء قائمة العناوين
   const addrSel = document.getElementById('siteAddress');
   if(addrSel) {
       addrSel.innerHTML = '<option value="">— اختر العنوان —</option>' + 
@@ -748,7 +746,7 @@ async function searchReports(showToast = true){
       headers:{'Content-Type':'text/plain;charset=utf-8'},
       body: JSON.stringify({
         action:'getReports',
-        filters: {center, day, month, visitorName} // إرسال اسم المستخدم للفلترة
+        filters: {center, day, month, visitorName}
       })
     });
     const data = await r.json();
@@ -1136,9 +1134,9 @@ async function init(){
     }
   }
 }
+
 async function initAppLogic(){
   try {
-    // 1. التحقق الآمن من جلسة الدخول
     let auth = null;
     try {
       const authStr = localStorage.getItem('auth_user');
@@ -1146,7 +1144,7 @@ async function initAppLogic(){
     } catch (e) {
       console.warn('خطأ في قراءة جلسة الدخول، سيتم مسحها.');
       localStorage.removeItem('auth_user');
-      location.reload(); // إعادة تحميل لإظهار شاشة الدخول
+      location.reload();
       return;
     }
 
@@ -1157,7 +1155,6 @@ async function initAppLogic(){
         document.getElementById('currentUserDisplay').textContent = auth.fullName;
     }
 
-    // 2. محاولة فتح قاعدة البيانات (مع الحماية)
     try {
       await openDB();
     } catch (dbErr) {
@@ -1186,7 +1183,6 @@ async function initAppLogic(){
     document.getElementById('attAM').addEventListener('input', calculateAttendance);
     document.getElementById('attPM').addEventListener('input', calculateAttendance);
 
-    // 3. تحميل القوائم المحفوظة
     try {
       const cachedSetup = localStorage.getItem('cache_setup');
       if (cachedSetup) {
@@ -1194,7 +1190,6 @@ async function initAppLogic(){
       }
     } catch(e) { console.warn('Failed to load cached setup', e); }
 
-    // 4. جلب القوائم من السيرفر
     if (navigator.onLine){
       try {
         const r = await fetch(API_URL, {
@@ -1213,7 +1208,6 @@ async function initAppLogic(){
     setInterval(()=>{ if (navigator.onLine) syncAll(); }, 60000);
 
   } catch (globalErr) {
-    // إذا حدث أي خطأ غير متوقع، سيظهر هنا ولن يغلق التطبيق
     document.body.innerHTML = `<div style="padding:20px; text-align:center; color:red; direction:rtl;">
       <h2>حدث خطأ أثناء التشغيل</h2>
       <p>${globalErr.message}</p>
@@ -1222,6 +1216,7 @@ async function initAppLogic(){
     console.error(globalErr);
   }
 }
+
 /*************************************************************
  * 10) تفعيل زر تثبيت التطبيق (PWA Install)
  *************************************************************/
@@ -1247,11 +1242,13 @@ if (instBtn) {
 }
 
 window.addEventListener('appinstalled', () => {
-  document.getElementById('installBtn').classList.add('hidden');
+  const ib = document.getElementById('installBtn');
+  if (ib) ib.classList.add('hidden');
 });
 
 if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-  document.getElementById('installBtn')?.classList.add('hidden');
+  const ib = document.getElementById('installBtn');
+  if (ib) ib.classList.add('hidden');
 }
 
 document.addEventListener('DOMContentLoaded', init);
