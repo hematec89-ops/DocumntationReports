@@ -5,7 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#1F4E78">
 <title>زيارات ميدانية</title>
-<link rel="manifest" href="manifest.json">
+
+<!-- 🚨 صائد الأخطاء: سيظهر أي خطأ على الشاشة بدلاً من إغلاق التطبيق -->
+<script>
+  window.onerror = function(msg, url, line, col, error) {
+    document.body.innerHTML = '<div style="padding:20px; color:red; direction:rtl; font-family:tahoma; text-align:center;">' +
+      '<h2>حدث خطأ برمجي:</h2>' +
+      '<p style="background:#fee; padding:10px; border-radius:5px;">' + msg + '</p>' +
+      '<p>السطر: ' + line + '</p>' +
+      '<button onclick="location.reload()" style="padding:10px; margin-top:10px;">إعادة المحاولة</button>' +
+      '</div>';
+    return false;
+  };
+</script>
+
+<!-- ⚠️ تم تعطيل المانيفست مؤقتاً للاختبار -->
+<!-- <link rel="manifest" href="manifest.json"> -->
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -16,13 +31,11 @@
   .dot{width:8px;height:8px;border-radius:50%;background:#4ade80}
   .dot.off{background:#f87171}
 
-  /* تنسيق زر التثبيت */
   #installBtn {background: rgba(255, 255, 255, 0.2);border: none;border-radius: 8px;padding: 4px;cursor: pointer;display: flex;align-items: center;justify-content: center;transition: background 0.3s;}
   #installBtn:hover { background: rgba(255, 255, 255, 0.4); }
   #installBtn img { width: 28px; height: 28px; border-radius: 6px; }
   .hidden { display: none !important; }
 
-  /* شاشة تسجيل الدخول */
   #loginScreen {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: #f0f4f8; z-index: 9999;
@@ -57,7 +70,6 @@
   input[readonly] { background-color: #f3f4f6; color: #6b7280; cursor: not-allowed; }
   .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
-  /* تنسيق جدول المعيقات */
   .actions-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
   .actions-table th, .actions-table td { border: 1px solid #d1d5db; padding: 6px; text-align: center; vertical-align: middle; }
   .actions-table th { background: #f3f4f6; font-size: 12px; color: #374151; }
@@ -76,7 +88,6 @@
   .item-btns button.sel-na {background-color: #475569;color: #ffffff;border-color: #475569;transform: scale(1.05);}
   .item .note{margin-top:8px;font-size:13px}
 
-  /* نتائج البحث */
   .report-row{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom:10px;display:flex;flex-direction:column;gap:6px;cursor:pointer}
   .report-row:hover{background:#f7fafc}
   .report-row .rr-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -91,7 +102,6 @@
   .rr-actions .btn-eye{background:#e0e7ff;color:#3730a3}
   .rr-actions .btn-print{background:#dbeafe;color:#1e40af}
 
-  /* الأزرار السفلية */
   .actions{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;box-shadow:0 -2px 10px rgba(0,0,0,.08);z-index:20;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
   .actions button{padding:13px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer}
   .btn-primary{background:#1F4E78;color:#fff}
@@ -101,7 +111,6 @@
 
   .badge{display:inline-block;min-width:20px;padding:1px 7px;background:#dc2626;color:#fff;border-radius:999px;font-size:11px;margin-right:6px;text-align:center}
 
-  /* شريط التبويبات */
   .bottom-nav{position:fixed;bottom:60px;left:0;right:0;background:#fff;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 -1px 3px rgba(0,0,0,.08);z-index:19}
   .bottom-nav button{background:none;border:none;padding:12px 0;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;border-top:3px solid transparent}
   .bottom-nav button.active{color:#1F4E78;border-top-color:#1F4E78}
@@ -117,38 +126,28 @@
   .filter-toggle{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:#374151}
   .filter-toggle input{width:auto;transform:scale(1.2)}
 
-  /* ============ الطباعة ============ */
   #printArea{display:none}
 
   @media print {
     body{padding:0;margin:0;background:#fff}
     body > *:not(#printArea){display:none !important}
     #printArea{display:block !important}
-
     @page{size:A4 portrait;margin:12mm}
-
     .print-page{page-break-after:always;font-size:10pt;color:#000;direction:rtl;padding:0;font-family:"Segoe UI",Tahoma,sans-serif}
     .print-page:last-child{page-break-after:auto}
-
     .print-header{text-align:center;border-bottom:2px solid #1F4E78;padding-bottom:6px;margin-bottom:10px}
     .print-header h1{margin:0;font-size:15pt;color:#1F4E78}
     .print-header .meta{font-size:9pt;color:#555;margin-top:4px}
-
     .section-title{font-size:11pt;font-weight:bold;color:#1F4E78;margin:10px 0 4px;border-right:4px solid #2E75B6;padding-right:8px}
-
     .print-page table{width:100%;border-collapse:collapse;margin:5px 0}
     .print-page table td,.print-page table th{border:1px solid #666;padding:4px 6px;font-size:9pt;text-align:right;vertical-align:top}
     .print-page table th{background:#e8eef5 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-
     .print-page .ok-color{color:#006100;font-weight:bold}
     .print-page .no-color{color:#9C0006;font-weight:bold}
-
     .print-footer{margin-top:20px;display:flex;justify-content:space-between;gap:20px;font-size:10pt}
     .print-footer > div{border-top:1px solid #333;padding-top:4px;flex:1;text-align:center}
-
     .print-summary-box{display:flex;gap:8px;margin:8px 0}
     .print-summary-box div{flex:1;border:1px solid #666;border-radius:6px;padding:6px;text-align:center;font-size:10pt;background:#fafbfc !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    
     .print-extra-box{border:1px solid #666;padding:8px;font-size:10pt;margin-bottom:10px;min-height:40px;}
   }
 </style>
@@ -185,14 +184,12 @@
     <button id="btnLogout" style="background:#dc2626; color:white; border:none; padding:6px 10px; border-radius:6px; font-size:12px; cursor:pointer; margin-right:5px;">خروج</button>
   </header>
 
-  <!-- ==================== تبويب 1: التسجيل ==================== -->
   <main id="tab-form" class="tab-content active">
 
     <div class="card">
       <h2>بيانات الزيارة</h2>
       <div class="row">
         <div><label>اسم الزائر</label>
-          <!-- تم تغييره إلى input للقراءة فقط ليتم تعبئته آلياً -->
           <input id="visitName" readonly>
         </div>
         <div><label>الوظيفة</label>
@@ -234,7 +231,6 @@
       <div id="items"></div>
     </div>
 
-    <!-- جدول المعيقات والإجراءات -->
     <div class="card" style="overflow-x: auto;">
       <h2>المعيقات والإجراءات (5 صفوف)</h2>
       <table class="actions-table">
@@ -311,9 +307,7 @@
 
   </main>
 
-  <!-- ==================== تبويب 2: التقارير والطباعة ==================== -->
   <main id="tab-reports" class="tab-content">
-
     <div class="card" id="userBanner" style="background:#e0f2fe; text-align:center; border: 1px solid #bae6fd;">
         <h2 style="color:#0369a1; border-bottom:none; margin-bottom:5px;">👤 أنت تشاهد تقاريرك فقط</h2>
         <strong style="font-size:16px; color:#0c4a6e;" id="currentUserDisplay">—</strong>
@@ -330,7 +324,6 @@
       </div>
 
       <button id="btnSearch" class="btn-primary" style="width:100%;margin-top:12px">🔍 بحث</button>
-
       <label class="filter-toggle">
         <input type="checkbox" id="includeItems">
         تضمين تفاصيل البنود في الطباعة (29 بندًا لكل تقرير)
@@ -341,10 +334,8 @@
       <h2>النتائج (<span id="resultsCount">0</span> تقرير)</h2>
       <div id="resultsList"><div class="empty">اضغط "بحث" لعرض التقارير</div></div>
     </div>
-
   </main>
 
-  <!-- ==================== أزرار سفلية ==================== -->
   <nav class="bottom-nav" id="bottomNav">
     <button data-tab="form" class="active">📝 تسجيل زيارة</button>
     <button data-tab="reports">📊 التقارير</button>
@@ -357,15 +348,10 @@
 
 </div> <!-- نهاية mainApp -->
 
-<!-- نسخة للطباعة -->
 <div id="printArea"></div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-/*************************************************************
- * 1) إعدادات
- *************************************************************/
 const API_URL = 'https://script.google.com/macros/s/AKfycbwPiKRJqQKXs-kO7vHURVSkPjQnikcSgNKtSExX6l_WXfT7g0r12XF8Q6K2-P7z6uWY/exec';
 const CACHE_KEY_CENTERS  = 'cache_centers';
 const CACHE_KEY_REPORTS  = 'cache_reports';
@@ -402,9 +388,6 @@ const ITEMS = [
   'التأكد من توثيق أسباب الغياب ونتائج الاتصالات في دفتر الغياب'
 ];
 
-/*************************************************************
- * 2) IndexedDB (السجلات المحلية المعلّقة)
- *************************************************************/
 const DB_NAME = 'visits_db';
 const DB_VER  = 1;
 let _db = null;
@@ -427,9 +410,6 @@ function dbAdd(o){return new Promise((res,rej)=>{const tx=_db.transaction('visit
 function dbPut(o){return new Promise((res,rej)=>{const tx=_db.transaction('visits','readwrite');const r=tx.objectStore('visits').put(o);r.onsuccess=()=>res(r.result);r.onerror=e=>rej(e.target.error);});}
 function dbGetAll(){return new Promise((res,rej)=>{const tx=_db.transaction('visits','readonly');const r=tx.objectStore('visits').getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=e=>rej(e.target.error);});}
 
-/*************************************************************
- * 3) أدوات واجهة
- *************************************************************/
 let _toastTimer;
 function toast(msg){
   const t = document.getElementById('toast');
@@ -464,9 +444,6 @@ function switchTab(tab){
   }
 }
 
-/*************************************************************
- * 4) تبويب التسجيل — البناء والحفظ والمزامنة
- *************************************************************/
 function renderItems(){
   const c = document.getElementById('items');
   c.innerHTML = ITEMS.map((txt,i)=>`
@@ -689,9 +666,6 @@ function updateSyncBadge(){
   });
 }
 
-/*************************************************************
- * 5) تبويب التقارير — البحث والفلاتر
- *************************************************************/
 let _lastReports = [];
 
 async function loadCenters(){
@@ -879,9 +853,6 @@ function renderResults(reports){
   });
 }
 
-/*************************************************************
- * 6) الطباعة
- *************************************************************/
 function doPrint(){
   if (!_lastReports.length){
     searchReports(false).then(()=>{
@@ -1050,9 +1021,6 @@ function buildReportHTML(r, includeItems){
   `;
 }
 
-/*************************************************************
- * 7) حالة الشبكة
- *************************************************************/
 function updateStatus(){
   const online = navigator.onLine;
   document.getElementById('statusDot').classList.toggle('off', !online);
@@ -1063,9 +1031,6 @@ function updateStatus(){
 window.addEventListener('online',  ()=>{ updateStatus(); syncAll(); });
 window.addEventListener('offline', updateStatus);
 
-/*************************************************************
- * 8) أدوات
- *************************************************************/
 function escapeHtml(s){
   if (s == null) return '';
   return String(s)
@@ -1073,9 +1038,6 @@ function escapeHtml(s){
     .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
-/*************************************************************
- * 9) تسجيل الدخول والتهيئة
- *************************************************************/
 async function handleLogin() {
   const user = document.getElementById('loginUsername').value.trim();
   const pass = document.getElementById('loginPassword').value.trim();
@@ -1159,7 +1121,6 @@ async function initAppLogic(){
       await openDB();
     } catch (dbErr) {
       console.error("فشل فتح قاعدة البيانات:", dbErr);
-      alert("تنبيه: مساحة التخزين ممتلئة أو هناك مشكلة في المتصفح. قد لا يعمل الحفظ بدون إنترنت.");
     }
 
     renderItems();
@@ -1217,9 +1178,6 @@ async function initAppLogic(){
   }
 }
 
-/*************************************************************
- * 10) تفعيل زر تثبيت التطبيق (PWA Install)
- *************************************************************/
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
