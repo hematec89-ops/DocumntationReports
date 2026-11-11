@@ -17,29 +17,44 @@
   .dot.off{background:#f87171}
 
   /* تنسيق زر التثبيت */
-  #installBtn {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    border-radius: 8px;
-    padding: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s;
-  }
+  #installBtn {background: rgba(255, 255, 255, 0.2);border: none;border-radius: 8px;padding: 4px;cursor: pointer;display: flex;align-items: center;justify-content: center;transition: background 0.3s;}
   #installBtn:hover { background: rgba(255, 255, 255, 0.4); }
   #installBtn img { width: 28px; height: 28px; border-radius: 6px; }
   .hidden { display: none !important; }
+
+  /* شاشة تسجيل الدخول */
+  #loginScreen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #f0f4f8; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; box-sizing: border-box; direction: rtl;
+  }
+  .login-box {
+    background: #fff; padding: 30px 20px; border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px;
+    text-align: center;
+  }
+  .login-box img { width: 80px; height: 80px; margin-bottom: 15px; }
+  .login-box h2 { color: #1F4E78; margin-top: 0; font-size: 22px; }
+  .login-box input {
+    width: 100%; padding: 12px; margin-bottom: 15px;
+    border: 1px solid #ccc; border-radius: 8px; font-size: 16px; outline: none;
+  }
+  .login-box input:focus { border-color: #1F4E78; }
+  .login-box button {
+    width: 100%; padding: 12px; background: #1F4E78; color: #fff;
+    border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;
+  }
 
   .tab-content{display:none}
   .tab-content.active{display:block}
 
   .card{background:#fff;margin:12px;padding:14px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
   .card h2{font-size:18px;color:#1F4E78;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid #e5e7eb;}
-  label{display:block;font-size:18px; /* تكبير حجم السؤال من 12 إلى 18 */font-weight:bold; /* جعل الخط عريضاً */color:#111827; /* تغميق اللون إلى الأسود تقريباً */margin:10px 0 6px;}
-  input,select,textarea{width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:16px; /* تكبير النص المكتوب داخل الحقل */font-family:inherit;background:#fff;}
+  label{display:block;font-size:18px;font-weight:bold;color:#111827;margin:10px 0 6px;}
+  input,select,textarea{width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:16px;font-family:inherit;background:#fff;}
   input:focus,select:focus,textarea:focus{outline:2px solid #2E75B6;border-color:transparent}
+  input[readonly] { background-color: #f3f4f6; color: #6b7280; cursor: not-allowed; }
   .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
   /* تنسيق جدول المعيقات */
@@ -50,18 +65,15 @@
   .actions-table .row-num { font-weight: bold; color: #6b7280; width: 30px; }
 
   .item{border:1px solid #e5e7eb;border-radius:10px;padding:10px;margin-bottom:8px;background:#fafbfc}
-  .item-text{font-size:17px; /* تكبير حجم نص البند */font-weight:600;color:#111827; /* لون داكن وواضح */line-height:1.5;margin-bottom:8px;}
-    /* تنسيق الأزرار الثلاثة */
-  .item-btns {display: flex;gap: 8px;justify-content: flex-start; /* ترتيب الأزرار من اليمين لليسار */flex-wrap: wrap;margin-top: 8px;}
-  .item-btns button {padding: 8px 16px;border-radius: 20px; /* جعل الأزرار دائرية الحواف */font-size: 14px;font-weight: bold;cursor: pointer;transition: all 0.2s ease-in-out;box-shadow: 0 1px 3px rgba(0,0,0,0.1);min-width: 80px; /* عرض متناسق */}
-  /* الألوان الافتراضية (قبل الاختيار) */
-  .item-btns button[data-val="✔"] {background-color: #f0fdf4; /* أخضر فاتح جداً */color: #166534; /* نص أخضر غامق */border: 1px solid #166534;}
-  .item-btns button[data-val="✘"] {background-color: #fef2f2; /* أحمر فاتح جداً */color: #991b1b; /* نص أحمر غامق */border: 1px solid #991b1b;}
-  .item-btns button[data-val="لا ينطبق"] {background-color: #f8fafc; /* رمادي فاتح جداً */color: #475569; /* نص رمادي غامق */border: 1px solid #475569;}
-  /* الألوان عند اختيار الزر (تعبئة كاملة) */
-  .item-btns button.sel-ok {background-color: #166534; /* أخضر غامق */color: #ffffff;border-color: #166534;transform: scale(1.05); /* تأثير تكبير بسيط عند الاختيار */}
-  .item-btns button.sel-no {background-color: #991b1b; /* أحمر غامق */color: #ffffff;border-color: #991b1b;transform: scale(1.05);}
-  .item-btns button.sel-na {background-color: #475569; /* رمادي غامق */color: #ffffff;border-color: #475569;transform: scale(1.05);}
+  .item-text{font-size:17px;font-weight:600;color:#111827;line-height:1.5;margin-bottom:8px;}
+  .item-btns {display: flex;gap: 8px;justify-content: flex-start;flex-wrap: wrap;margin-top: 8px;}
+  .item-btns button {padding: 8px 16px;border-radius: 20px;font-size: 14px;font-weight: bold;cursor: pointer;transition: all 0.2s ease-in-out;box-shadow: 0 1px 3px rgba(0,0,0,0.1);min-width: 80px;}
+  .item-btns button[data-val="✔"] {background-color: #f0fdf4;color: #166534;border: 1px solid #166534;}
+  .item-btns button[data-val="✘"] {background-color: #fef2f2;color: #991b1b;border: 1px solid #991b1b;}
+  .item-btns button[data-val="لا ينطبق"] {background-color: #f8fafc;color: #475569;border: 1px solid #475569;}
+  .item-btns button.sel-ok {background-color: #166534;color: #ffffff;border-color: #166534;transform: scale(1.05);}
+  .item-btns button.sel-no {background-color: #991b1b;color: #ffffff;border-color: #991b1b;transform: scale(1.05);}
+  .item-btns button.sel-na {background-color: #475569;color: #ffffff;border-color: #475569;transform: scale(1.05);}
   .item .note{margin-top:8px;font-size:13px}
 
   /* نتائج البحث */
@@ -142,185 +154,208 @@
 </style>
 </head>
 <body>
-<header>
-  <h1>زيارات ميدانية</h1>
-  
-  <!-- زر التثبيت -->
-  <button id="installBtn" class="hidden" title="تثبيت التطبيق">
-    <img src="icon-192.png" alt="تثبيت">
-  </button>
 
-  <span class="status">
-    <span class="dot" id="statusDot"></span>
-    <span id="statusText">متصل</span>
-  </span>
-</header>
+<!-- شاشة تسجيل الدخول -->
+<div id="loginScreen">
+  <div class="login-box">
+    <img src="icon-192.png" alt="شعار">
+    <h2>تسجيل الدخول</h2>
+    <input type="text" id="loginUsername" placeholder="اسم المستخدم" autocomplete="username">
+    <input type="password" id="loginPassword" placeholder="كلمة المرور" autocomplete="current-password">
+    <button id="btnLogin">دخول</button>
+    <p id="loginError" style="color:red; font-size:13px; margin-top:10px; display:none;"></p>
+  </div>
+</div>
 
-<!-- ==================== تبويب 1: التسجيل ==================== -->
-<main id="tab-form" class="tab-content active">
+<!-- التطبيق الأساسي (مخفي حتى يتم الدخول) -->
+<div id="mainApp" style="display:none;">
 
-  <div class="card">
-    <h2>بيانات الزيارة</h2>
-    <div class="row">
-      <div><label>اسم الزائر</label>
-        <select id="visitName">
-          <option value="">— اختر الزائر —</option>
-        </select>
+  <header>
+    <h1>زيارات ميدانية</h1>
+    
+    <button id="installBtn" class="hidden" title="تثبيت التطبيق">
+      <img src="icon-192.png" alt="تثبيت">
+    </button>
+
+    <span class="status">
+      <span class="dot" id="statusDot"></span>
+      <span id="statusText">متصل</span>
+    </span>
+
+    <button id="btnLogout" style="background:#dc2626; color:white; border:none; padding:6px 10px; border-radius:6px; font-size:12px; cursor:pointer; margin-right:5px;">خروج</button>
+  </header>
+
+  <!-- ==================== تبويب 1: التسجيل ==================== -->
+  <main id="tab-form" class="tab-content active">
+
+    <div class="card">
+      <h2>بيانات الزيارة</h2>
+      <div class="row">
+        <div><label>اسم الزائر</label>
+          <!-- تم تغييره إلى input للقراءة فقط ليتم تعبئته آلياً -->
+          <input id="visitName" readonly>
+        </div>
+        <div><label>الوظيفة</label>
+          <select id="visitJob">
+            <option>منسق/ة ميداني/ة</option>
+            <option>منسق مشروع</option>
+          </select>
+        </div>
       </div>
-      <div><label>الوظيفة</label>
-        <select id="visitJob">
-          <option>منسق/ة ميداني/ة</option>
-          <option>منسق مشروع</option>
-        </select>
+      <div class="row">
+        <div><label>تاريخ الزيارة</label><input type="date" id="visitDate"></div>
+        <div><label>الفترة</label>
+          <div class="row">
+            <input type="time" id="fromTime">
+            <input type="time" id="toTime">
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div><label>تاريخ الزيارة</label><input type="date" id="visitDate"></div>
-      <div><label>الفترة</label>
-        <div class="row">
-          <input type="time" id="fromTime">
-          <input type="time" id="toTime">
+      <label>اسم المشروع</label>
+      <select id="projectName">
+        <option value="">— اختر المشروع —</option>
+      </select>
+      <div class="row">
+        <div><label>المركز / اسم الموقع</label>
+          <select id="siteName">
+            <option value="">— اختر المركز —</option>
+          </select>
+        </div>
+        <div><label>العنوان</label>
+          <select id="siteAddress">
+            <option value="">— اختر العنوان —</option>
+          </select>
         </div>
       </div>
     </div>
-    <label>اسم المشروع</label>
-    <select id="projectName">
-      <option value="">— اختر المشروع —</option>
-    </select>
-    <div class="row">
-      <div><label>المركز / اسم الموقع</label>
-        <select id="siteName">
-          <option value="">— اختر المركز —</option>
-        </select>
-      </div>
-      <div><label>العنوان</label>
-        <select id="siteAddress">
-          <option value="">— اختر العنوان —</option>
-        </select>
-      </div>
-    </div>
-  </div>
 
-  <div class="card">
-    <h2>بنود التحقق (29 بندًا)</h2>
-    <div id="items"></div>
-  </div>
-
-  <!-- جدول المعيقات والإجراءات -->
-  <div class="card" style="overflow-x: auto;">
-    <h2>المعيقات والإجراءات (5 صفوف)</h2>
-    <table class="actions-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>المعيقات</th>
-          <th>الإجراء المطلوب من المؤسسة</th>
-          <th>ملاحظات إضافية</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="row-num">1</td>
-          <td><input type="text" id="obs_1" placeholder="المعيق..."></td>
-          <td><input type="text" id="act_1" placeholder="الإجراء..."></td>
-          <td><input type="text" id="note_1" placeholder="ملاحظة..."></td>
-        </tr>
-        <tr>
-          <td class="row-num">2</td>
-          <td><input type="text" id="obs_2" placeholder="المعيق..."></td>
-          <td><input type="text" id="act_2" placeholder="الإجراء..."></td>
-          <td><input type="text" id="note_2" placeholder="ملاحظة..."></td>
-        </tr>
-        <tr>
-          <td class="row-num">3</td>
-          <td><input type="text" id="obs_3" placeholder="المعيق..."></td>
-          <td><input type="text" id="act_3" placeholder="الإجراء..."></td>
-          <td><input type="text" id="note_3" placeholder="ملاحظة..."></td>
-        </tr>
-        <tr>
-          <td class="row-num">4</td>
-          <td><input type="text" id="obs_4" placeholder="المعيق..."></td>
-          <td><input type="text" id="act_4" placeholder="الإجراء..."></td>
-          <td><input type="text" id="note_4" placeholder="ملاحظة..."></td>
-        </tr>
-        <tr>
-          <td class="row-num">5</td>
-          <td><input type="text" id="obs_5" placeholder="المعيق..."></td>
-          <td><input type="text" id="act_5" placeholder="الإجراء..."></td>
-          <td><input type="text" id="note_5" placeholder="ملاحظة..."></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="card">
-    <h2>الحضور</h2>
-    <div class="row">
-      <div>
-        <label>الحضور الصباحي (الفعلي)</label>
-        <input type="number" min="0" id="attAM">
-        <small style="color:#1F4E78; font-weight:bold; display:block; margin-top:4px;" id="pctAMDisplay">النسبة: —</small>
-      </div>
-      <div>
-        <label>الحضور المسائي (الفعلي)</label>
-        <input type="number" min="0" id="attPM">
-        <small style="color:#1F4E78; font-weight:bold; display:block; margin-top:4px;" id="pctPMDisplay">النسبة: —</small>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>التذييل</h2>
-    <label>اسم المنسق الميداني</label><input id="coordinatorName">
-    <label>التوقيع (نص)</label><input id="signature">
-    <label>تاريخ تعبئة التقرير</label><input type="date" id="reportDate">
-  </div>
-
-  <div class="card">
-    <h2>السجلات المحفوظة محليًا (<span id="pendingCount">0</span> معلّق)</h2>
-    <div id="pendingList" class="pending-list"></div>
-  </div>
-
-</main>
-
-<!-- ==================== تبويب 2: التقارير والطباعة ==================== -->
-<main id="tab-reports" class="tab-content">
-
-  <div class="card">
-    <h2>فلترة التقارير</h2>
-    <label>المركز / اسم الموقع</label>
-    <select id="filterCenter"><option value="">— كل المراكز —</option></select>
-
-    <div class="row">
-      <div><label>اليوم</label><input type="date" id="filterDay"></div>
-      <div><label>الشهر</label><input type="month" id="filterMonth"></div>
+    <div class="card">
+      <h2>بنود التحقق (29 بندًا)</h2>
+      <div id="items"></div>
     </div>
 
-    <button id="btnSearch" class="btn-primary" style="width:100%;margin-top:12px">🔍 بحث</button>
+    <!-- جدول المعيقات والإجراءات -->
+    <div class="card" style="overflow-x: auto;">
+      <h2>المعيقات والإجراءات (5 صفوف)</h2>
+      <table class="actions-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>المعيقات</th>
+            <th>الإجراء المطلوب من المؤسسة</th>
+            <th>ملاحظات إضافية</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-num">1</td>
+            <td><input type="text" id="obs_1" placeholder="المعيق..."></td>
+            <td><input type="text" id="act_1" placeholder="الإجراء..."></td>
+            <td><input type="text" id="note_1" placeholder="ملاحظة..."></td>
+          </tr>
+          <tr>
+            <td class="row-num">2</td>
+            <td><input type="text" id="obs_2" placeholder="المعيق..."></td>
+            <td><input type="text" id="act_2" placeholder="الإجراء..."></td>
+            <td><input type="text" id="note_2" placeholder="ملاحظة..."></td>
+          </tr>
+          <tr>
+            <td class="row-num">3</td>
+            <td><input type="text" id="obs_3" placeholder="المعيق..."></td>
+            <td><input type="text" id="act_3" placeholder="الإجراء..."></td>
+            <td><input type="text" id="note_3" placeholder="ملاحظة..."></td>
+          </tr>
+          <tr>
+            <td class="row-num">4</td>
+            <td><input type="text" id="obs_4" placeholder="المعيق..."></td>
+            <td><input type="text" id="act_4" placeholder="الإجراء..."></td>
+            <td><input type="text" id="note_4" placeholder="ملاحظة..."></td>
+          </tr>
+          <tr>
+            <td class="row-num">5</td>
+            <td><input type="text" id="obs_5" placeholder="المعيق..."></td>
+            <td><input type="text" id="act_5" placeholder="الإجراء..."></td>
+            <td><input type="text" id="note_5" placeholder="ملاحظة..."></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <label class="filter-toggle">
-      <input type="checkbox" id="includeItems">
-      تضمين تفاصيل البنود في الطباعة (29 بندًا لكل تقرير)
-    </label>
+    <div class="card">
+      <h2>الحضور</h2>
+      <div class="row">
+        <div>
+          <label>الحضور الصباحي (الفعلي)</label>
+          <input type="number" min="0" id="attAM">
+          <small style="color:#1F4E78; font-weight:bold; display:block; margin-top:4px;" id="pctAMDisplay">النسبة: —</small>
+        </div>
+        <div>
+          <label>الحضور المسائي (الفعلي)</label>
+          <input type="number" min="0" id="attPM">
+          <small style="color:#1F4E78; font-weight:bold; display:block; margin-top:4px;" id="pctPMDisplay">النسبة: —</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>التذييل</h2>
+      <label>اسم المنسق الميداني</label><input id="coordinatorName" readonly>
+      <label>التوقيع (نص)</label><input id="signature" readonly>
+      <label>تاريخ تعبئة التقرير</label><input type="date" id="reportDate">
+    </div>
+
+    <div class="card">
+      <h2>السجلات المحفوظة محليًا (<span id="pendingCount">0</span> معلّق)</h2>
+      <div id="pendingList" class="pending-list"></div>
+    </div>
+
+  </main>
+
+  <!-- ==================== تبويب 2: التقارير والطباعة ==================== -->
+  <main id="tab-reports" class="tab-content">
+
+    <div class="card" id="userBanner" style="background:#e0f2fe; text-align:center; border: 1px solid #bae6fd;">
+        <h2 style="color:#0369a1; border-bottom:none; margin-bottom:5px;">👤 أنت تشاهد تقاريرك فقط</h2>
+        <strong style="font-size:16px; color:#0c4a6e;" id="currentUserDisplay">—</strong>
+    </div>
+
+    <div class="card">
+      <h2>فلترة التقارير</h2>
+      <label>المركز / اسم الموقع</label>
+      <select id="filterCenter"><option value="">— كل المراكز —</option></select>
+
+      <div class="row">
+        <div><label>اليوم</label><input type="date" id="filterDay"></div>
+        <div><label>الشهر</label><input type="month" id="filterMonth"></div>
+      </div>
+
+      <button id="btnSearch" class="btn-primary" style="width:100%;margin-top:12px">🔍 بحث</button>
+
+      <label class="filter-toggle">
+        <input type="checkbox" id="includeItems">
+        تضمين تفاصيل البنود في الطباعة (29 بندًا لكل تقرير)
+      </label>
+    </div>
+
+    <div class="card">
+      <h2>النتائج (<span id="resultsCount">0</span> تقرير)</h2>
+      <div id="resultsList"><div class="empty">اضغط "بحث" لعرض التقارير</div></div>
+    </div>
+
+  </main>
+
+  <!-- ==================== أزرار سفلية ==================== -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button data-tab="form" class="active">📝 تسجيل زيارة</button>
+    <button data-tab="reports">📊 التقارير</button>
+  </nav>
+
+  <div class="actions" id="actionBar">
+    <button class="btn-primary" id="btnSave">💾 حفظ محليًا</button>
+    <button class="btn-sync" id="btnSync">☁️ مزامنة <span class="badge" id="syncBadge">0</span></button>
   </div>
 
-  <div class="card">
-    <h2>النتائج (<span id="resultsCount">0</span> تقرير)</h2>
-    <div id="resultsList"><div class="empty">اضغط "بحث" لعرض التقارير</div></div>
-  </div>
-
-</main>
-
-<!-- ==================== أزرار سفلية ==================== -->
-<nav class="bottom-nav" id="bottomNav">
-  <button data-tab="form" class="active">📝 تسجيل زيارة</button>
-  <button data-tab="reports">📊 التقارير</button>
-</nav>
-
-<div class="actions" id="actionBar">
-  <button class="btn-primary" id="btnSave">💾 حفظ محليًا</button>
-  <button class="btn-sync" id="btnSync">☁️ مزامنة <span class="badge" id="syncBadge">0</span></button>
-</div>
+</div> <!-- نهاية mainApp -->
 
 <!-- نسخة للطباعة -->
 <div id="printArea"></div>
@@ -464,7 +499,7 @@ function loadSetupData(data){
   projSel.innerHTML = '<option value="">— اختر المشروع —</option>' +
     (data.projects||[]).map(p=>`<option value="${p.name}" data-no="${p.no||''}">${p.name}</option>`).join('');
   
-  // 2. ملء قائمة المراكز (مع تخزين الأعداد الكلية كـ data attributes)
+  // 2. ملء قائمة المراكز
   const siteSel = document.getElementById('siteName');
   siteSel.innerHTML = '<option value="">— اختر المركز —</option>' + 
     (data.sites||[]).map(s => `<option value="${s.name}" data-am="${s.totalAM}" data-pm="${s.totalPM}">${s.name}</option>`).join('');
@@ -475,17 +510,6 @@ function loadSetupData(data){
       addrSel.innerHTML = '<option value="">— اختر العنوان —</option>' + 
         (data.addresses||[]).map(a => `<option value="${a}">${a}</option>`).join('');
   }
-
-  // 4. ملء قائمة الزوار
-  const visitSel = document.getElementById('visitName');
-  visitSel.innerHTML = '<option value="">— اختر الزائر —</option>' + 
-    (data.visitors||[]).map(v => `<option value="${v}">${v}</option>`).join('');
-
-  // التعبئة التلقائية للتوقيع والمنسق
-  visitSel.addEventListener('change', function() {
-      document.getElementById('signature').value = this.value;
-      document.getElementById('coordinatorName').value = this.value;
-  });
 }
 
 function calculateAttendance() {
@@ -573,7 +597,7 @@ function collectForm(){
 function resetForm(){
   document.querySelectorAll('input,select,textarea').forEach(el=>{
     if (el.tagName==='SELECT') el.selectedIndex = 0;
-    else if (el.type!=='date' && el.type!=='time' && el.type!=='checkbox') el.value='';
+    else if (el.type!=='date' && el.type!=='time' && el.type!=='checkbox' && !el.readOnly) el.value='';
   });
   document.querySelectorAll('.item').forEach(el=>{
     el.dataset.value = '';
@@ -702,6 +726,8 @@ async function searchReports(showToast = true){
   const center = document.getElementById('filterCenter').value;
   const day    = document.getElementById('filterDay').value;
   const month  = document.getElementById('filterMonth').value;
+  const auth   = JSON.parse(localStorage.getItem('auth_user'));
+  const visitorName = auth ? auth.fullName : '';
 
   if (!navigator.onLine){
     const cached = readReportsCache();
@@ -723,7 +749,7 @@ async function searchReports(showToast = true){
       headers:{'Content-Type':'text/plain;charset=utf-8'},
       body: JSON.stringify({
         action:'getReports',
-        filters: {center, day, month}
+        filters: {center, day, month, visitorName} // إرسال اسم المستخدم للفلترة
       })
     });
     const data = await r.json();
@@ -1051,9 +1077,76 @@ function escapeHtml(s){
 }
 
 /*************************************************************
- * 9) التهيئة
+ * 9) تسجيل الدخول والتهيئة
  *************************************************************/
+async function handleLogin() {
+  const user = document.getElementById('loginUsername').value.trim();
+  const pass = document.getElementById('loginPassword').value.trim();
+  const btn = document.getElementById('btnLogin');
+  const err = document.getElementById('loginError');
+
+  if (!user || !pass) {
+    err.textContent = 'يرجى إدخال اسم المستخدم وكلمة المرور';
+    err.style.display = 'block';
+    return;
+  }
+
+  btn.textContent = 'جاري التحقق...'; btn.disabled = true; err.style.display = 'none';
+
+  try {
+    const r = await fetch(API_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify({action: 'login', username: user, password: pass})
+    });
+    const data = await r.json();
+
+    if (data.ok) {
+      localStorage.setItem('auth_user', JSON.stringify(data.user));
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'block';
+      await initAppLogic();
+    } else {
+      err.textContent = data.error;
+      err.style.display = 'block';
+    }
+  } catch (e) {
+    err.textContent = 'فشل الاتصال بالسيرفر. تأكد من الإنترنت.';
+    err.style.display = 'block';
+  } finally {
+    btn.textContent = 'دخول'; btn.disabled = false;
+  }
+}
+
 async function init(){
+  document.getElementById('btnLogin').addEventListener('click', handleLogin);
+  document.getElementById('btnLogout').addEventListener('click', () => {
+      localStorage.removeItem('auth_user');
+      location.reload();
+  });
+
+  const authStr = localStorage.getItem('auth_user');
+  if (authStr) {
+    try {
+      const auth = JSON.parse(authStr);
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'block';
+      await initAppLogic();
+    } catch(e) {
+      localStorage.removeItem('auth_user');
+    }
+  }
+}
+
+async function initAppLogic(){
+  const auth = JSON.parse(localStorage.getItem('auth_user'));
+  if(auth) {
+      document.getElementById('visitName').value = auth.fullName;
+      document.getElementById('coordinatorName').value = auth.fullName;
+      document.getElementById('signature').value = auth.fullName;
+      document.getElementById('currentUserDisplay').textContent = auth.fullName;
+  }
+
   await openDB();
   renderItems();
   resetForm();
@@ -1072,12 +1165,10 @@ async function init(){
   document.getElementById('filterDay').addEventListener('change', ()=>searchReports(false));
   document.getElementById('filterMonth').addEventListener('change', ()=>searchReports(false));
 
-  // تفعيل الحساب الفوري للحضور عند التغيير
   document.getElementById('siteName').addEventListener('change', calculateAttendance);
   document.getElementById('attAM').addEventListener('input', calculateAttendance);
   document.getElementById('attPM').addEventListener('input', calculateAttendance);
 
-  // 1. محاولة تحميل القوائم من الذاكرة المحلية أولاً (للعمل بدون إنترنت)
   try {
     const cachedSetup = localStorage.getItem('cache_setup');
     if (cachedSetup) {
@@ -1085,7 +1176,6 @@ async function init(){
     }
   } catch(e) { console.warn('Failed to load cached setup', e); }
 
-  // 2. إذا كان هناك إنترنت، نقوم بتحديث القوائم وحفظها في الذاكرة
   if (navigator.onLine){
     try {
       const r = await fetch(API_URL, {
@@ -1112,25 +1202,20 @@ let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  
   const installBtn = document.getElementById('installBtn');
-  if (installBtn) {
-    installBtn.classList.remove('hidden');
-  }
+  if (installBtn) installBtn.classList.remove('hidden');
 });
 
 document.getElementById('installBtn')?.addEventListener('click', async () => {
   if (deferredPrompt) {
     deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    console.log(`User response to the install prompt: ${outcome}`);
+    await deferredPrompt.userChoice;
     deferredPrompt = null;
     document.getElementById('installBtn').classList.add('hidden');
   }
 });
 
 window.addEventListener('appinstalled', () => {
-  console.log('PWA was installed');
   document.getElementById('installBtn').classList.add('hidden');
 });
 
