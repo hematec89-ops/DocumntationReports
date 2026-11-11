@@ -1,4 +1,4 @@
-const CACHE = 'visits-v34';
+const CACHE = 'visits-v35';
 const ASSETS = ['./', './index.html', './manifest.json', './icon.svg'];
 
 self.addEventListener('install', e=>{
