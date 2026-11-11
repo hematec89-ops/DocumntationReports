@@ -1,4 +1,4 @@
-const CACHE_NAME = 'visits-v40'; // غير الرقم في كل مرة
+const CACHE_NAME = 'visits-v45'; // غير الرقم في كل مرة
 const ASSETS = [
   './',
   './index.html',
