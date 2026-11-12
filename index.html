@@ -797,12 +797,18 @@ function renderResults(reports){
         `;
     }
 
-    let replyHtml = '';
+   let replyHtml = '';
     if (r.managerReply) {
         replyHtml = `
             <div style="margin-top:10px; background:#e0f2fe; padding:10px; border-radius:8px; border-right:4px solid #0284c7;">
                 <strong style="color:#0284c7;">💬 رد المدير (مراسلة داخلية):</strong>
-                <p style="margin:5px 0 0 0; font-size:12px;">${escapeHtml(r.managerReply)}</p>
+                <p style="margin:5px 0 10px 0; font-size:12px; white-space: pre-wrap;">${escapeHtml(r.managerReply)}</p>
+                
+                <!-- نموذج رد المنسق -->
+                <div style="border-top: 1px dashed #bae6fd; padding-top: 10px; margin-top: 10px;">
+                    <textarea id="coordReply-${idx}" rows="2" placeholder="اكتب توضيحك للمدير هنا..." style="font-size:12px; padding:6px; margin-bottom:5px;"></textarea>
+                    <button onclick="sendReplyToManager('${r.reportNo}', ${idx})" style="background:#0284c7; color:white; border:none; padding:6px 12px; border-radius:6px; font-size:12px; cursor:pointer;">📤 إرسال الرد للمدير</button>
+                </div>
             </div>
         `;
     }
@@ -889,7 +895,39 @@ function printReports(reports, includeItems, single){
     catch(e){ toast('تعذّر فتح الطباعة. استخدم "مشاركة ← طباعة" من المتصفح.'); }
   }, 100);
 }
-
+async function sendReplyToManager(reportNo, idx) {
+    const text = document.getElementById(`coordReply-${idx}`).value.trim();
+    if (!text) return toast('يرجى كتابة الرد أولاً');
+    
+    const btn = event.target;
+    btn.textContent = 'جاري الإرسال...';
+    btn.disabled = true;
+    
+    try {
+        const resp = await fetch(API_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'text/plain;charset=utf-8'},
+            body: JSON.stringify({
+                action: 'replyToManager',
+                reportNo: reportNo,
+                message: text
+            })
+        });
+        const result = await resp.json();
+        
+        if (result.ok) {
+            toast('✅ تم إرسال ردك للمدير بنجاح');
+            document.getElementById(`coordReply-${idx}`).value = ''; // تفريغ المربع
+        } else {
+            toast('❌ فشل الإرسال: ' + result.error);
+        }
+    } catch (e) {
+        toast('❌ حدث خطأ في الاتصال');
+    } finally {
+        btn.textContent = '📤 إرسال الرد للمدير';
+        btn.disabled = false;
+    }
+}
 function buildBatchHeader(count, center, day, month){
   const parts = [`عدد التقارير: ${count}`];
   if (center) parts.push('المركز: ' + center);
