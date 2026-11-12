@@ -6,21 +6,16 @@
 <meta name="theme-color" content="#1F4E78">
 <title>زيارات ميدانية</title>
 
-<!-- 🚨 صائد الأخطاء: سيظهر أي خطأ على الشاشة بدلاً من إغلاق التطبيق -->
 <script>
   window.onerror = function(msg, url, line, col, error) {
     document.body.innerHTML = '<div style="padding:20px; color:red; direction:rtl; font-family:tahoma; text-align:center;">' +
-      '<h2>حدث خطأ برمجي:</h2>' +
-      '<p style="background:#fee; padding:10px; border-radius:5px;">' + msg + '</p>' +
-      '<p>السطر: ' + line + '</p>' +
-      '<button onclick="location.reload()" style="padding:10px; margin-top:10px;">إعادة المحاولة</button>' +
-      '</div>';
+      '<h2>حدث خطأ برمجي:</h2><p style="background:#fee; padding:10px; border-radius:5px;">' + msg + '</p><p>السطر: ' + line + '</p>' +
+      '<button onclick="location.reload()" style="padding:10px; margin-top:10px;">إعادة المحاولة</button></div>';
     return false;
   };
 </script>
 
-<!-- ⚠️ تم تعطيل المانيفست مؤقتاً للاختبار -->
-<!-- <link rel="manifest" href="manifest.json"> -->
+<link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style>
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -36,28 +31,13 @@
   #installBtn img { width: 28px; height: 28px; border-radius: 6px; }
   .hidden { display: none !important; }
 
-  #loginScreen {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #f0f4f8; z-index: 9999;
-    display: flex; align-items: center; justify-content: center;
-    padding: 20px; box-sizing: border-box; direction: rtl;
-  }
-  .login-box {
-    background: #fff; padding: 30px 20px; border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px;
-    text-align: center;
-  }
+  #loginScreen {position: fixed; top: 0; left: 0; width: 100%; height: 100%;background: #f0f4f8; z-index: 9999;display: flex; align-items: center; justify-content: center;padding: 20px; box-sizing: border-box; direction: rtl;}
+  .login-box {background: #fff; padding: 30px 20px; border-radius: 12px;box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px;text-align: center;}
   .login-box img { width: 80px; height: 80px; margin-bottom: 15px; }
   .login-box h2 { color: #1F4E78; margin-top: 0; font-size: 22px; }
-  .login-box input {
-    width: 100%; padding: 12px; margin-bottom: 15px;
-    border: 1px solid #ccc; border-radius: 8px; font-size: 16px; outline: none;
-  }
+  .login-box input {width: 100%; padding: 12px; margin-bottom: 15px;border: 1px solid #ccc; border-radius: 8px; font-size: 16px; outline: none;}
   .login-box input:focus { border-color: #1F4E78; }
-  .login-box button {
-    width: 100%; padding: 12px; background: #1F4E78; color: #fff;
-    border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;
-  }
+  .login-box button {width: 100%; padding: 12px; background: #1F4E78; color: #fff;border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;}
 
   .tab-content{display:none}
   .tab-content.active{display:block}
@@ -120,14 +100,11 @@
 
   .pending-list{font-size:12px;color:#6b7280}
   .pending-list div{padding:6px;border-bottom:1px solid #f3f4f6}
-
   .empty{text-align:center;color:#9ca3af;padding:20px;font-size:13px}
-
   .filter-toggle{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:#374151}
   .filter-toggle input{width:auto;transform:scale(1.2)}
 
   #printArea{display:none}
-
   @media print {
     body{padding:0;margin:0;background:#fff}
     body > *:not(#printArea){display:none !important}
@@ -154,7 +131,6 @@
 </head>
 <body>
 
-<!-- شاشة تسجيل الدخول -->
 <div id="loginScreen">
   <div class="login-box">
     <img src="icon-192.png" alt="شعار">
@@ -166,7 +142,6 @@
   </div>
 </div>
 
-<!-- التطبيق الأساسي (مخفي حتى يتم الدخول) -->
 <div id="mainApp" style="display:none;">
 
   <header>
@@ -355,6 +330,8 @@
 const API_URL = 'https://script.google.com/macros/s/AKfycbwPiKRJqQKXs-kO7vHURVSkPjQnikcSgNKtSExX6l_WXfT7g0r12XF8Q6K2-P7z6uWY/exec';
 const CACHE_KEY_CENTERS  = 'cache_centers';
 const CACHE_KEY_REPORTS  = 'cache_reports';
+// قمنا بتغيير اسم الكاش إلى v2 لإجبار المتصفح على تحميل البيانات الجديدة
+const CACHE_KEY_SETUP = 'cache_setup_v2'; 
 
 const ITEMS = [
   'تم التحقق من وجود لوحة تعريفية بالمشروع والممول',
@@ -470,19 +447,44 @@ function renderItems(){
   });
 }
 
+let _projectData = [];
+
 function loadSetupData(data){
+  _projectData = data.projects || [];
+
+  // 🌟 التعديل هنا: إظهار رقم المشروع بجانب اسمه لكي نميز بينهما
   const projSel = document.getElementById('projectName');
   projSel.innerHTML = '<option value="">— اختر المشروع —</option>' +
-    (data.projects||[]).map(p=>`<option value="${p.name}" data-no="${p.no||''}">${p.name}</option>`).join('');
-  
+    _projectData.map(p=>`<option value="${p.no}">[${p.no}] ${p.name}</option>`).join('');
+
   const siteSel = document.getElementById('siteName');
-  siteSel.innerHTML = '<option value="">— اختر المركز —</option>' + 
-    (data.sites||[]).map(s => `<option value="${s.name}" data-am="${s.totalAM}" data-pm="${s.totalPM}">${s.name}</option>`).join('');
+  siteSel.innerHTML = '<option value="">— اختر المركز —</option>';
+
+  projSel.onchange = function() {
+      const selectedProjNo = this.value;
+      siteSel.innerHTML = '<option value="">— اختر المركز —</option>';
+      
+      if (selectedProjNo) {
+          const proj = _projectData.find(p => p.no === selectedProjNo);
+          if (proj && proj.sites) {
+              siteSel.innerHTML += proj.sites.map(s => 
+                  `<option value="${s.name}" data-am="${s.totalAM}" data-pm="${s.totalPM}">${s.name}</option>`
+              ).join('');
+          }
+      }
+      calculateAttendance(); 
+  };
 
   const addrSel = document.getElementById('siteAddress');
   if(addrSel) {
       addrSel.innerHTML = '<option value="">— اختر العنوان —</option>' + 
         (data.addresses||[]).map(a => `<option value="${a}">${a}</option>`).join('');
+  }
+
+  const filterCenter = document.getElementById('filterCenter');
+  if (filterCenter && data.allSites) {
+      filterCenter.innerHTML = '<option value="">— كل المراكز —</option>' +
+        data.allSites.map(c => `<option value="${c}">${c}</option>`).join('');
   }
 }
 
@@ -533,6 +535,11 @@ function collectForm(){
       }
   }
   
+  const projSelect = document.getElementById('projectName');
+  const selectedProjOption = projSelect.options[projSelect.selectedIndex];
+  const projName = selectedProjOption ? selectedProjOption.text : '';
+  const projNo = projSelect.value;
+
   const siteSel = document.getElementById('siteName');
   const selectedSite = siteSel.options[siteSel.selectedIndex];
   
@@ -550,8 +557,8 @@ function collectForm(){
     visitDate:  document.getElementById('visitDate').value,
     fromTime:   document.getElementById('fromTime').value,
     toTime:     document.getElementById('toTime').value,
-    projectName:document.getElementById('projectName').value,
-    projectNo:  (document.getElementById('projectName').selectedOptions[0] && document.getElementById('projectName').selectedOptions[0].dataset) ? document.getElementById('projectName').selectedOptions[0].dataset.no : '',
+    projectName: projName,
+    projectNo:   projNo,
     siteName:   document.getElementById('siteName').value.trim(),
     siteAddress:document.getElementById('siteAddress').value.trim(),
     items,
@@ -879,9 +886,7 @@ function printReports(reports, includeItems, single){
 
   setTimeout(()=>{
     try { window.print(); }
-    catch(e){
-      toast('تعذّر فتح الطباعة. استخدم "مشاركة ← طباعة" من المتصفح.');
-    }
+    catch(e){ toast('تعذّر فتح الطباعة. استخدم "مشاركة ← طباعة" من المتصفح.'); }
   }, 100);
 }
 
@@ -1144,8 +1149,9 @@ async function initAppLogic(){
     document.getElementById('attAM').addEventListener('input', calculateAttendance);
     document.getElementById('attPM').addEventListener('input', calculateAttendance);
 
+    // 🌟 التعديل هنا: استخدام اسم كاش جديد لتجاوز البيانات القديمة
     try {
-      const cachedSetup = localStorage.getItem('cache_setup');
+      const cachedSetup = localStorage.getItem(CACHE_KEY_SETUP);
       if (cachedSetup) {
         loadSetupData(JSON.parse(cachedSetup));
       }
@@ -1161,7 +1167,7 @@ async function initAppLogic(){
         const data = await r.json();
         if (data.ok) {
           loadSetupData(data);
-          localStorage.setItem('cache_setup', JSON.stringify(data));
+          localStorage.setItem(CACHE_KEY_SETUP, JSON.stringify(data));
         }
       } catch(e){ console.warn('setup load failed', e); }
     }
@@ -1170,8 +1176,7 @@ async function initAppLogic(){
 
   } catch (globalErr) {
     document.body.innerHTML = `<div style="padding:20px; text-align:center; color:red; direction:rtl;">
-      <h2>حدث خطأ أثناء التشغيل</h2>
-      <p>${globalErr.message}</p>
+      <h2>حدث خطأ أثناء التشغيل</h2><p>${globalErr.message}</p>
       <button onclick="location.reload()" style="padding:10px; margin-top:10px;">إعادة المحاولة</button>
     </div>`;
     console.error(globalErr);
@@ -1179,7 +1184,6 @@ async function initAppLogic(){
 }
 
 let deferredPrompt;
-
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
