@@ -94,31 +94,22 @@
 
   /* تنسيقات البطاقات الداخلية للتقرير */
   .report-details-container { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-  
   .inner-card { background: #fff; border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; }
   .inner-card-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; padding-bottom: 6px; border-bottom: 1px dashed #e5e7eb; }
-  
   .card-done { border-right: 4px solid #166534; background: #f0fdf4; }
   .card-done .inner-card-title { color: #166534; }
-  
   .card-notdone { border-right: 4px solid #991b1b; background: #fef2f2; }
   .card-notdone .inner-card-title { color: #991b1b; }
-  
   .card-na { border-right: 4px solid #475569; background: #f8fafc; }
   .card-na .inner-card-title { color: #475569; }
-  
   .card-actions { border-right: 4px solid #d97706; background: #fffbeb; }
   .card-actions .inner-card-title { color: #d97706; }
-
   .card-replies { border-right: 4px solid #0284c7; background: #f0f9ff; }
   .card-replies .inner-card-title { color: #0284c7; }
-
   .inner-item-list { margin: 0; padding: 0; list-style: none; }
   .inner-item-list li { font-size: 13px; color: #374151; margin-bottom: 8px; padding-right: 5px; line-height: 1.5; }
   .inner-item-list li:last-child { margin-bottom: 0; }
   .item-note { font-size: 11px; color: #6b7280; display: block; margin-top: 3px; background: #fff; padding: 4px; border-radius: 4px; border: 1px solid #e5e7eb; }
-
-  /* تنسيق إحصائيات الحضور */
   .attendance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .stat-box { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px; text-align: center; }
   .stat-box span { display: block; font-size: 12px; color: #6b7280; margin-bottom: 5px; }
@@ -725,7 +716,6 @@ function renderResults(reports){
 
     const rowColor = (r.managerReply) ? 'background-color: #f8fafc; border-color: #cbd5e1;' : '';
 
-    // 1. تجهيز عناصر "تم"
     let doneHtml = '';
     if (r.items) {
         const doneList = r.items.filter(i => i.result === '✔');
@@ -741,7 +731,6 @@ function renderResults(reports){
         }
     }
 
-    // 2. تجهيز عناصر "لم يتم"
     let notDoneHtml = '';
     if (r.items) {
         const notDoneList = r.items.filter(i => i.result === '✘');
@@ -757,7 +746,6 @@ function renderResults(reports){
         }
     }
 
-    // 3. تجهيز عناصر "لا ينطبق"
     let naHtml = '';
     if (r.items) {
         const naList = r.items.filter(i => i.result === 'لا ينطبق' || !i.result);
@@ -773,7 +761,6 @@ function renderResults(reports){
         }
     }
 
-    // 4. تجهيز إحصائيات الحضور
     const attendanceHtml = `
       <div class="inner-card" style="border-right: 4px solid #1F4E78;">
         <div class="inner-card-title" style="color:#1F4E78;">📊 إحصائيات الحضور</div>
@@ -792,7 +779,6 @@ function renderResults(reports){
       </div>
     `;
 
-    // 5. تجهيز جدول المعيقات
     let actionsHtml = '';
     if (r.actionsTable && r.actionsTable.length > 0) {
         const rows = r.actionsTable.map((row, i) => `
@@ -817,7 +803,6 @@ function renderResults(reports){
         `;
     }
 
-    // 6. تجهيز الردود
     let replyHtml = '';
     if (r.managerReply) {
         replyHtml = `
@@ -828,7 +813,6 @@ function renderResults(reports){
         `;
     }
 
-    // 7. تجهيز مربع رد المدير (إذا كان المستخدم مديراً)
     let replyBoxHtml = '';
     if (isManager) {
         replyBoxHtml = `
@@ -875,7 +859,6 @@ function renderResults(reports){
     `;
   }).join('');
 
-  // تفعيل أزرار عرض التفاصيل
   box.querySelectorAll('.btn-toggle-details').forEach(b=>{
     b.addEventListener('click', e=>{
       e.stopPropagation();
@@ -891,12 +874,12 @@ function renderResults(reports){
     });
   });
 
-  // تفعيل أزرار الطباعة
   box.querySelectorAll('[data-action="print"]').forEach(b=>{
     b.addEventListener('click', e=>{
       e.stopPropagation();
       const i = Number(b.dataset.idx);
-      printReports([reports[i]], false, true);
+      // 🌟 التعديل هنا: إجبار إظهار التفاصيل عند الطباعة الفردية
+      printReports([reports[i]], true, true);
     });
   });
 }
@@ -950,14 +933,12 @@ function buildReportHTML(r, includeItems){
 
   const summaryBox = `<div class="print-summary-box"><div><strong>تم</strong><br><span style="font-size:14pt;color:#006100">${doneCount}</span></div><div><strong>لم يتم</strong><br><span style="font-size:14pt;color:#9C0006">${notDoneCount}</span></div><div><strong>نسبة البنود</strong><br><span style="font-size:14pt;color:#1F4E78">${pct}%</span></div><div><strong>الحضور الصباحي</strong><br><span style="font-size:12pt">${escapeHtml(String(r.attAM||0))} / ${escapeHtml(String(r.totalAM||0))}</span><br><span style="color:#006100">(${r.pctAM||0}%)</span></div><div><strong>الحضور المسائي</strong><br><span style="font-size:12pt">${escapeHtml(String(r.attPM||0))} / ${escapeHtml(String(r.totalPM||0))}</span><br><span style="color:#006100">(${r.pctPM||0}%)</span></div></div>`;
 
-  let detailsHTML = '';
-  if (includeItems){
-    const itemsArray = ITEMS.map((txt, i) => { const it = items[i] || {result:'', note:''}; return { text: txt, result: it.result, note: it.note, index: i }; });
-    const order = {'✔': 1, '✘': 2, 'لا ينطبق': 3};
-    itemsArray.sort((a, b) => { const valA = order[a.result] || 4; const valB = order[b.result] || 4; return valA - valB; });
-    const rows = itemsArray.map((item) => { const cls = item.result==='✔' ? 'ok-color' : item.result==='✘' ? 'no-color' : ''; const display = item.result || '—'; return `<tr><td style="text-align:center;width:5%">${item.index+1}</td><td>${escapeHtml(item.text)}</td><td style="text-align:center;width:12%" class="${cls}">${escapeHtml(display)}</td><td style="width:22%">${escapeHtml(item.note||'')}</td></tr>`; }).join('');
-    detailsHTML = `<div class="section-title">تفاصيل البنود (مرتبة حسب النتيجة)</div><table><thead><tr><th>#</th><th>البند</th><th>النتيجة</th><th>ملاحظة</th></tr></thead><tbody>${rows}</tbody></table>`;
-  }
+  // 🌟 التعديل: إزالة شرط includeItems لطباعة التفاصيل دائماً
+  const itemsArray = ITEMS.map((txt, i) => { const it = items[i] || {result:'', note:''}; return { text: txt, result: it.result, note: it.note, index: i }; });
+  const order = {'✔': 1, '✘': 2, 'لا ينطبق': 3};
+  itemsArray.sort((a, b) => { const valA = order[a.result] || 4; const valB = order[b.result] || 4; return valA - valB; });
+  const rows = itemsArray.map((item) => { const cls = item.result==='✔' ? 'ok-color' : item.result==='✘' ? 'no-color' : ''; const display = item.result || '—'; return `<tr><td style="text-align:center;width:5%">${item.index+1}</td><td>${escapeHtml(item.text)}</td><td style="text-align:center;width:12%" class="${cls}">${escapeHtml(display)}</td><td style="width:22%">${escapeHtml(item.note||'')}</td></tr>`; }).join('');
+  let detailsHTML = `<div class="section-title">تفاصيل البنود (مرتبة حسب النتيجة)</div><table><thead><tr><th>#</th><th>البند</th><th>النتيجة</th><th>ملاحظة</th></tr></thead><tbody>${rows}</tbody></table>`;
 
   let extraNotes = '';
   if (r.actionsTable && r.actionsTable.length > 0) {
@@ -967,9 +948,20 @@ function buildReportHTML(r, includeItems){
       extraNotes = `<div class="section-title">المعيقات والإجراءات المطلوبة</div><p style="font-size:10pt;">لا يوجد معيقات مسجلة.</p>`;
   }
 
+  // 🌟 التعديل: إضافة قسم لردود المدير في الطباعة
+  let managerReplyHTML = '';
+  if (r.managerReply) {
+      managerReplyHTML = `
+          <div class="section-title">الردود والملاحظات (المدير)</div>
+          <div style="border: 1px solid #0284c7; padding: 10px; background: #f0f9ff; border-radius: 4px;">
+              <p style="margin:0; font-size:10pt; white-space: pre-wrap; line-height:1.6;">${escapeHtml(r.managerReply)}</p>
+          </div>
+      `;
+  }
+
   const footer = `<div class="print-footer"><div>اسم المنسق: ${escapeHtml(r.coordinatorName||'')}</div><div>التوقيع: ${escapeHtml(r.signature || r.visitName || '_________________')}</div><div>تاريخ التعبئة: ${escapeHtml(r.reportDate||'')}</div></div>`;
 
-  return `<div class="print-page"><div class="print-header"><h1>تقرير زيارة ميدانية</h1><div class="meta">رقم التقرير: ${escapeHtml(r.reportNo||'—')} — تاريخ الحفظ: ${escapeHtml(r.savedAt||'')}</div></div><div class="section-title">بيانات الزيارة</div>${infoTable}<div class="section-title">ملخص النتائج</div>${summaryBox}${detailsHTML}${extraNotes}${footer}</div>`;
+  return `<div class="print-page"><div class="print-header"><h1>تقرير زيارة ميدانية</h1><div class="meta">رقم التقرير: ${escapeHtml(r.reportNo||'—')} — تاريخ الحفظ: ${escapeHtml(r.savedAt||'')}</div></div><div class="section-title">بيانات الزيارة</div>${infoTable}<div class="section-title">ملخص النتائج</div>${summaryBox}${detailsHTML}${extraNotes}${managerReplyHTML}${footer}</div>`;
 }
 
 function updateStatus(){
@@ -1061,7 +1053,6 @@ async function initAppLogic(){
 
     document.querySelectorAll('#bottomNav button').forEach(b=>{ b.addEventListener('click', ()=>switchTab(b.dataset.tab)); });
 
-    // ✅ الحل: التحقق من وجود الزر قبل إضافة الحدث لتجنب إغلاق التطبيق
     const btnSave = document.getElementById('btnSave');
     if (btnSave) btnSave.addEventListener('click', saveLocal);
     
