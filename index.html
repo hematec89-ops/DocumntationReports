@@ -25,12 +25,10 @@
   .status{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.15)}
   .dot{width:8px;height:8px;border-radius:50%;background:#4ade80}
   .dot.off{background:#f87171}
-
   #installBtn {background: rgba(255, 255, 255, 0.2);border: none;border-radius: 8px;padding: 4px;cursor: pointer;display: flex;align-items: center;justify-content: center;transition: background 0.3s;}
   #installBtn:hover { background: rgba(255, 255, 255, 0.4); }
   #installBtn img { width: 28px; height: 28px; border-radius: 6px; }
   .hidden { display: none !important; }
-
   #loginScreen {position: fixed; top: 0; left: 0; width: 100%; height: 100%;background: #f0f4f8; z-index: 9999;display: flex; align-items: center; justify-content: center;padding: 20px; box-sizing: border-box; direction: rtl;}
   .login-box {background: #fff; padding: 30px 20px; border-radius: 12px;box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px;text-align: center;}
   .login-box img { width: 80px; height: 80px; margin-bottom: 15px; }
@@ -38,10 +36,8 @@
   .login-box input {width: 100%; padding: 12px; margin-bottom: 15px;border: 1px solid #ccc; border-radius: 8px; font-size: 16px; outline: none;}
   .login-box input:focus { border-color: #1F4E78; }
   .login-box button {width: 100%; padding: 12px; background: #1F4E78; color: #fff;border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;}
-
   .tab-content{display:none}
   .tab-content.active{display:block}
-
   .card{background:#fff;margin:12px;padding:14px;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
   .card h2{font-size:18px;color:#1F4E78;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid #e5e7eb;}
   label{display:block;font-size:18px;font-weight:bold;color:#111827;margin:10px 0 6px;}
@@ -49,13 +45,11 @@
   input:focus,select:focus,textarea:focus{outline:2px solid #2E75B6;border-color:transparent}
   input[readonly] { background-color: #f3f4f6; color: #6b7280; cursor: not-allowed; }
   .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
   .actions-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
   .actions-table th, .actions-table td { border: 1px solid #d1d5db; padding: 6px; text-align: center; vertical-align: middle; }
   .actions-table th { background: #f3f4f6; font-size: 12px; color: #374151; }
   .actions-table input { width: 100%; border: 1px solid #e5e7eb; padding: 6px; border-radius: 4px; font-size: 12px; margin: 0; }
   .actions-table .row-num { font-weight: bold; color: #6b7280; width: 30px; }
-
   .item{border:1px solid #e5e7eb;border-radius:10px;padding:10px;margin-bottom:8px;background:#fafbfc}
   .item-text{font-size:17px;font-weight:600;color:#111827;line-height:1.5;margin-bottom:8px;}
   .item-btns {display: flex;gap: 8px;justify-content: flex-start;flex-wrap: wrap;margin-top: 8px;}
@@ -67,8 +61,7 @@
   .item-btns button.sel-no {background-color: #991b1b;color: #ffffff;border-color: #991b1b;transform: scale(1.05);}
   .item-btns button.sel-na {background-color: #475569;color: #ffffff;border-color: #475569;transform: scale(1.05);}
   .item .note{margin-top:8px;font-size:13px}
-
-  .report-row{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom:10px;display:flex;flex-direction:column;gap:6px;cursor:pointer}
+  .report-row{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom:10px;display:flex;flex-direction:column;gap:6px;cursor:pointer; transition: background 0.3s;}
   .report-row:hover{background:#f7fafc}
   .report-row .rr-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
   .report-row .rr-no{font-weight:bold;color:#1F4E78;font-size:14px}
@@ -81,29 +74,23 @@
   .rr-actions button{padding:6px 10px;border:none;border-radius:8px;font-size:12px;cursor:pointer}
   .rr-actions .btn-eye{background:#e0e7ff;color:#3730a3}
   .rr-actions .btn-print{background:#dbeafe;color:#1e40af}
-
   .actions{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:10px 12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;box-shadow:0 -2px 10px rgba(0,0,0,.08);z-index:20;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
   .actions button{padding:13px;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer}
   .btn-primary{background:#1F4E78;color:#fff}
   .btn-sync{background:#2E75B6;color:#fff}
   .btn-print-main{background:#0f766e;color:#fff}
   .btn-primary:disabled,.btn-sync:disabled{background:#cbd5e1;cursor:not-allowed}
-
   .badge{display:inline-block;min-width:20px;padding:1px 7px;background:#dc2626;color:#fff;border-radius:999px;font-size:11px;margin-right:6px;text-align:center}
-
   .bottom-nav{position:fixed;bottom:60px;left:0;right:0;background:#fff;display:grid;grid-template-columns:1fr 1fr;box-shadow:0 -1px 3px rgba(0,0,0,.08);z-index:19}
   .bottom-nav button{background:none;border:none;padding:12px 0;font-size:13px;font-weight:600;color:#6b7280;cursor:pointer;border-top:3px solid transparent}
   .bottom-nav button.active{color:#1F4E78;border-top-color:#1F4E78}
-
   .toast{position:fixed;bottom:130px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:99;max-width:90%}
   .toast.show{opacity:1}
-
   .pending-list{font-size:12px;color:#6b7280}
   .pending-list div{padding:6px;border-bottom:1px solid #f3f4f6}
   .empty{text-align:center;color:#9ca3af;padding:20px;font-size:13px}
   .filter-toggle{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:#374151}
   .filter-toggle input{width:auto;transform:scale(1.2)}
-
   #printArea{display:none}
   @media print {
     body{padding:0;margin:0;background:#fff}
@@ -146,108 +133,41 @@
 
   <header>
     <h1>زيارات ميدانية</h1>
-    
-    <button id="installBtn" class="hidden" title="تثبيت التطبيق">
-      <img src="icon-192.png" alt="تثبيت">
-    </button>
-
-    <span class="status">
-      <span class="dot" id="statusDot"></span>
-      <span id="statusText">متصل</span>
-    </span>
-
+    <button id="installBtn" class="hidden" title="تثبيت التطبيق"><img src="icon-192.png" alt="تثبيت"></button>
+    <span class="status"><span class="dot" id="statusDot"></span><span id="statusText">متصل</span></span>
     <button id="btnLogout" style="background:#dc2626; color:white; border:none; padding:6px 10px; border-radius:6px; font-size:12px; cursor:pointer; margin-right:5px;">خروج</button>
   </header>
 
   <main id="tab-form" class="tab-content active">
-
     <div class="card">
       <h2>بيانات الزيارة</h2>
       <div class="row">
-        <div><label>اسم الزائر</label>
-          <input id="visitName" readonly>
-        </div>
-        <div><label>الوظيفة</label>
-          <select id="visitJob">
-            <option>منسق/ة ميداني/ة</option>
-            <option>منسق مشروع</option>
-          </select>
-        </div>
+        <div><label>اسم الزائر</label><input id="visitName" readonly></div>
+        <div><label>الوظيفة</label><select id="visitJob"><option>منسق/ة ميداني/ة</option><option>منسق مشروع</option></select></div>
       </div>
       <div class="row">
         <div><label>تاريخ الزيارة</label><input type="date" id="visitDate"></div>
-        <div><label>الفترة</label>
-          <div class="row">
-            <input type="time" id="fromTime">
-            <input type="time" id="toTime">
-          </div>
-        </div>
+        <div><label>الفترة</label><div class="row"><input type="time" id="fromTime"><input type="time" id="toTime"></div></div>
       </div>
-      <label>اسم المشروع</label>
-      <select id="projectName">
-        <option value="">— اختر المشروع —</option>
-      </select>
+      <label>اسم المشروع</label><select id="projectName"><option value="">— اختر المشروع —</option></select>
       <div class="row">
-        <div><label>المركز / اسم الموقع</label>
-          <select id="siteName">
-            <option value="">— اختر المركز —</option>
-          </select>
-        </div>
-        <div><label>العنوان</label>
-          <select id="siteAddress">
-            <option value="">— اختر العنوان —</option>
-          </select>
-        </div>
+        <div><label>المركز / اسم الموقع</label><select id="siteName"><option value="">— اختر المركز —</option></select></div>
+        <div><label>العنوان</label><select id="siteAddress"><option value="">— اختر العنوان —</option></select></div>
       </div>
     </div>
 
-    <div class="card">
-      <h2>بنود التحقق (29 بندًا)</h2>
-      <div id="items"></div>
-    </div>
+    <div class="card"><h2>بنود التحقق (29 بندًا)</h2><div id="items"></div></div>
 
     <div class="card" style="overflow-x: auto;">
       <h2>المعيقات والإجراءات (5 صفوف)</h2>
       <table class="actions-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>المعيقات</th>
-            <th>الإجراء المطلوب من المؤسسة</th>
-            <th>ملاحظات إضافية</th>
-          </tr>
-        </thead>
+        <thead><tr><th>#</th><th>المعيقات</th><th>الإجراء المطلوب من المؤسسة</th><th>ملاحظات إضافية</th></tr></thead>
         <tbody>
-          <tr>
-            <td class="row-num">1</td>
-            <td><input type="text" id="obs_1" placeholder="المعيق..."></td>
-            <td><input type="text" id="act_1" placeholder="الإجراء..."></td>
-            <td><input type="text" id="note_1" placeholder="ملاحظة..."></td>
-          </tr>
-          <tr>
-            <td class="row-num">2</td>
-            <td><input type="text" id="obs_2" placeholder="المعيق..."></td>
-            <td><input type="text" id="act_2" placeholder="الإجراء..."></td>
-            <td><input type="text" id="note_2" placeholder="ملاحظة..."></td>
-          </tr>
-          <tr>
-            <td class="row-num">3</td>
-            <td><input type="text" id="obs_3" placeholder="المعيق..."></td>
-            <td><input type="text" id="act_3" placeholder="الإجراء..."></td>
-            <td><input type="text" id="note_3" placeholder="ملاحظة..."></td>
-          </tr>
-          <tr>
-            <td class="row-num">4</td>
-            <td><input type="text" id="obs_4" placeholder="المعيق..."></td>
-            <td><input type="text" id="act_4" placeholder="الإجراء..."></td>
-            <td><input type="text" id="note_4" placeholder="ملاحظة..."></td>
-          </tr>
-          <tr>
-            <td class="row-num">5</td>
-            <td><input type="text" id="obs_5" placeholder="المعيق..."></td>
-            <td><input type="text" id="act_5" placeholder="الإجراء..."></td>
-            <td><input type="text" id="note_5" placeholder="ملاحظة..."></td>
-          </tr>
+          <tr><td class="row-num">1</td><td><input type="text" id="obs_1"></td><td><input type="text" id="act_1"></td><td><input type="text" id="note_1"></td></tr>
+          <tr><td class="row-num">2</td><td><input type="text" id="obs_2"></td><td><input type="text" id="act_2"></td><td><input type="text" id="note_2"></td></tr>
+          <tr><td class="row-num">3</td><td><input type="text" id="obs_3"></td><td><input type="text" id="act_3"></td><td><input type="text" id="note_3"></td></tr>
+          <tr><td class="row-num">4</td><td><input type="text" id="obs_4"></td><td><input type="text" id="act_4"></td><td><input type="text" id="note_4"></td></tr>
+          <tr><td class="row-num">5</td><td><input type="text" id="obs_5"></td><td><input type="text" id="act_5"></td><td><input type="text" id="note_5"></td></tr>
         </tbody>
       </table>
     </div>
@@ -255,16 +175,8 @@
     <div class="card">
       <h2>الحضور</h2>
       <div class="row">
-        <div>
-          <label>الحضور الصباحي (الفعلي)</label>
-          <input type="number" min="0" id="attAM">
-          <small style="color:#1F4E78; font-weight:bold; display:block; margin-top:4px;" id="pctAMDisplay">النسبة: —</small>
-        </div>
-        <div>
-          <label>الحضور المسائي (الفعلي)</label>
-          <input type="number" min="0" id="attPM">
-          <small style="color:#1F4E78; font-weight:bold; display:block; margin-top:4px;" id="pctPMDisplay">النسبة: —</small>
-        </div>
+        <div><label>الحضور الصباحي (الفعلي)</label><input type="number" min="0" id="attAM"><small style="color:#1F4E78; font-weight:bold; display:block; margin-top:4px;" id="pctAMDisplay">النسبة: —</small></div>
+        <div><label>الحضور المسائي (الفعلي)</label><input type="number" min="0" id="attPM"><small style="color:#1F4E78; font-weight:bold; display:block; margin-top:4px;" id="pctPMDisplay">النسبة: —</small></div>
       </div>
     </div>
 
@@ -275,11 +187,7 @@
       <label>تاريخ تعبئة التقرير</label><input type="date" id="reportDate">
     </div>
 
-    <div class="card">
-      <h2>السجلات المحفوظة محليًا (<span id="pendingCount">0</span> معلّق)</h2>
-      <div id="pendingList" class="pending-list"></div>
-    </div>
-
+    <div class="card"><h2>السجلات المحفوظة محليًا (<span id="pendingCount">0</span> معلّق)</h2><div id="pendingList" class="pending-list"></div></div>
   </main>
 
   <main id="tab-reports" class="tab-content">
@@ -290,19 +198,10 @@
 
     <div class="card">
       <h2>فلترة التقارير</h2>
-      <label>المركز / اسم الموقع</label>
-      <select id="filterCenter"><option value="">— كل المراكز —</option></select>
-
-      <div class="row">
-        <div><label>اليوم</label><input type="date" id="filterDay"></div>
-        <div><label>الشهر</label><input type="month" id="filterMonth"></div>
-      </div>
-
+      <label>المركز / اسم الموقع</label><select id="filterCenter"><option value="">— كل المراكز —</option></select>
+      <div class="row"><div><label>اليوم</label><input type="date" id="filterDay"></div><div><label>الشهر</label><input type="month" id="filterMonth"></div></div>
       <button id="btnSearch" class="btn-primary" style="width:100%;margin-top:12px">🔍 بحث</button>
-      <label class="filter-toggle">
-        <input type="checkbox" id="includeItems">
-        تضمين تفاصيل البنود في الطباعة (29 بندًا لكل تقرير)
-      </label>
+      <label class="filter-toggle"><input type="checkbox" id="includeItems"> تضمين تفاصيل البنود في الطباعة</label>
     </div>
 
     <div class="card">
@@ -320,8 +219,7 @@
     <button class="btn-primary" id="btnSave">💾 حفظ محليًا</button>
     <button class="btn-sync" id="btnSync">☁️ مزامنة <span class="badge" id="syncBadge">0</span></button>
   </div>
-
-</div> <!-- نهاية mainApp -->
+</div>
 
 <div id="printArea"></div>
 <div class="toast" id="toast"></div>
@@ -330,7 +228,6 @@
 const API_URL = 'https://script.google.com/macros/s/AKfycbwPiKRJqQKXs-kO7vHURVSkPjQnikcSgNKtSExX6l_WXfT7g0r12XF8Q6K2-P7z6uWY/exec';
 const CACHE_KEY_CENTERS  = 'cache_centers';
 const CACHE_KEY_REPORTS  = 'cache_reports';
-// قمنا بتغيير اسم الكاش إلى v2 لإجبار المتصفح على تحميل البيانات الجديدة
 const CACHE_KEY_SETUP = 'cache_setup_v2'; 
 
 const ITEMS = [
@@ -452,7 +349,6 @@ let _projectData = [];
 function loadSetupData(data){
   _projectData = data.projects || [];
 
-  // 🌟 التعديل هنا: إظهار رقم المشروع بجانب اسمه لكي نميز بينهما
   const projSel = document.getElementById('projectName');
   projSel.innerHTML = '<option value="">— اختر المشروع —</option>' +
     _projectData.map(p=>`<option value="${p.no}">[${p.no}] ${p.name}</option>`).join('');
@@ -468,7 +364,11 @@ function loadSetupData(data){
           const proj = _projectData.find(p => p.no === selectedProjNo);
           if (proj && proj.sites) {
               siteSel.innerHTML += proj.sites.map(s => 
-                  `<option value="${s.name}" data-am="${s.totalAM}" data-pm="${s.totalPM}">${s.name}</option>`
+                  `<option value="${s.name}" 
+                    data-am-odd="${s.totalAM_odd}" 
+                    data-am-even="${s.totalAM_even}" 
+                    data-pm-odd="${s.totalPM_odd}" 
+                    data-pm-even="${s.totalPM_even}">${s.name}</option>`
               ).join('');
           }
       }
@@ -491,15 +391,28 @@ function loadSetupData(data){
 function calculateAttendance() {
     const siteSel = document.getElementById('siteName');
     const selectedOption = siteSel.options[siteSel.selectedIndex];
-    
-    if (!selectedOption || !selectedOption.value) {
+    const dateInput = document.getElementById('visitDate').value;
+
+    if (!selectedOption || !selectedOption.value || !dateInput) {
         document.getElementById('pctAMDisplay').textContent = 'النسبة: —';
         document.getElementById('pctPMDisplay').textContent = 'النسبة: —';
         return;
     }
 
-    const totalAM = Number(selectedOption.dataset.am) || 0;
-    const totalPM = Number(selectedOption.dataset.pm) || 0;
+    const parts = dateInput.split('-');
+    const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+    const dayOfWeek = dateObj.getDay(); 
+    const isOddDay = [0, 2, 4].includes(dayOfWeek);
+
+    let totalAM = 0, totalPM = 0;
+
+    if (isOddDay) {
+        totalAM = Number(selectedOption.dataset.amOdd) || 0;
+        totalPM = Number(selectedOption.dataset.pmOdd) || 0;
+    } else {
+        totalAM = Number(selectedOption.dataset.amEven) || 0;
+        totalPM = Number(selectedOption.dataset.pmEven) || 0;
+    }
 
     const inputAM = Number(document.getElementById('attAM').value) || 0;
     const inputPM = Number(document.getElementById('attPM').value) || 0;
@@ -543,8 +456,22 @@ function collectForm(){
   const siteSel = document.getElementById('siteName');
   const selectedSite = siteSel.options[siteSel.selectedIndex];
   
-  const totalAM = selectedSite ? Number(selectedSite.dataset.am) || 0 : 0;
-  const totalPM = selectedSite ? Number(selectedSite.dataset.pm) || 0 : 0;
+  const dateInput = document.getElementById('visitDate').value;
+  const parts = dateInput.split('-');
+  const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+  const isOddDay = [0, 2, 4].includes(dateObj.getDay());
+
+  let totalAM = 0, totalPM = 0;
+  if (selectedSite && dateInput) {
+      if (isOddDay) {
+          totalAM = Number(selectedSite.dataset.amOdd) || 0;
+          totalPM = Number(selectedSite.dataset.pmOdd) || 0;
+      } else {
+          totalAM = Number(selectedSite.dataset.amEven) || 0;
+          totalPM = Number(selectedSite.dataset.pmEven) || 0;
+      }
+  }
+
   const attAM = Number(document.getElementById('attAM').value) || 0;
   const attPM = Number(document.getElementById('attPM').value) || 0;
   
@@ -706,15 +633,11 @@ async function searchReports(showToast = true){
   const month  = document.getElementById('filterMonth').value;
   const auth   = JSON.parse(localStorage.getItem('auth_user'));
   const visitorName = auth ? auth.fullName : '';
+  const userRole = auth ? auth.role : 'منسق';
 
   if (!navigator.onLine){
     const cached = readReportsCache();
-    if (cached) {
-      _lastReports = cached;
-      renderResults(cached);
-      if (showToast) toast('أنت غير متصل — عرض آخر نتائج محفوظة');
-      return;
-    }
+    if (cached) { _lastReports = cached; renderResults(cached); if (showToast) toast('أنت غير متصل — عرض آخر نتائج محفوظة'); return; }
     return toast('لا يوجد اتصال ولا نتائج محفوظة');
   }
 
@@ -725,10 +648,7 @@ async function searchReports(showToast = true){
     const r = await fetch(API_URL, {
       method:'POST',
       headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body: JSON.stringify({
-        action:'getReports',
-        filters: {center, day, month, visitorName}
-      })
+      body: JSON.stringify({ action:'getReports', filters: {center, day, month, visitorName, userRole} })
     });
     const data = await r.json();
     if (!data.ok) throw new Error(data.error || 'فشل الجلب');
@@ -739,16 +659,8 @@ async function searchReports(showToast = true){
     if (showToast) toast(`عدد النتائج: ${_lastReports.length}`);
   } catch(e){
     const cached = readReportsCache();
-    if (cached) {
-      _lastReports = cached;
-      renderResults(cached);
-      toast('تعذّر التحديث — عرض آخر نتائج محفوظة');
-    } else {
-      toast('فشل الجلب: ' + e.message);
-    }
-  } finally {
-    btn.disabled = false; btn.textContent = '🔍 بحث';
-  }
+    if (cached) { _lastReports = cached; renderResults(cached); toast('تعذّر التحديث — عرض آخر نتائج محفوظة'); } else { toast('فشل الجلب: ' + e.message); }
+  } finally { btn.disabled = false; btn.textContent = '🔍 بحث'; }
 }
 
 function readReportsCache(){
@@ -761,9 +673,7 @@ function readReportsCache(){
 }
 function saveReportsCache(reports, filters){
   try {
-    localStorage.setItem(CACHE_KEY_REPORTS, JSON.stringify({
-      reports, filters, savedAt: new Date().toISOString()
-    }));
+    localStorage.setItem(CACHE_KEY_REPORTS, JSON.stringify({ reports, filters, savedAt: new Date().toISOString() }));
   } catch(e){ console.warn('cache too big', e); }
 }
 
@@ -772,72 +682,38 @@ function renderResults(reports){
   const box = document.getElementById('resultsList');
   if (!reports.length) { box.innerHTML = '<div class="empty">لا توجد تقارير مطابقة</div>'; return; }
 
+  const auth = JSON.parse(localStorage.getItem('auth_user'));
+  const isManager = auth && auth.role === 'مدير';
+
   box.innerHTML = reports.map((r, idx)=>{
     const itemSummary = r.items ? r.items.filter(i=>i.result==='✔').length : (r.done || 0);
     const notDone = r.items ? r.items.filter(i=>i.result==='✘').length : (r.notDone || 0);
 
+    const rowColor = (r.managerReply) ? 'background-color: #e6f4ea; border-color: #86efac;' : '';
+
     let actionsHtml = '';
     if (r.actionsTable && r.actionsTable.length > 0) {
-        const rows = r.actionsTable.map((row, i) => `
-            <tr>
-              <td style="border:1px solid #ccc; padding:4px; text-align:center;">${i+1}</td>
-              <td style="border:1px solid #ccc; padding:4px;">${escapeHtml(row.obs || '')}</td>
-              <td style="border:1px solid #ccc; padding:4px;">${escapeHtml(row.act || '')}</td>
-              <td style="border:1px solid #ccc; padding:4px;">${escapeHtml(row.note || '')}</td>
-            </tr>
-        `).join('');
-        actionsHtml = `
-            <div style="margin-top:10px; border-top:1px dashed #ccc; padding-top:10px;">
-                <strong style="color:#1F4E78;">جدول المعيقات والإجراءات:</strong>
-                <table style="width:100%; border-collapse:collapse; margin-top:5px; font-size:11px;">
-                    <thead><tr style="background:#f3f4f6;"><th>#</th><th>المعيقات</th><th>الإجراء المطلوب</th><th>ملاحظات</th></tr></thead>
-                    <tbody>${rows}</tbody>
-                </table>
-            </div>
-        `;
+        const rows = r.actionsTable.map((row, i) => `<tr><td style="border:1px solid #ccc; padding:4px; text-align:center;">${i+1}</td><td style="border:1px solid #ccc; padding:4px;">${escapeHtml(row.obs || '')}</td><td style="border:1px solid #ccc; padding:4px;">${escapeHtml(row.act || '')}</td><td style="border:1px solid #ccc; padding:4px;">${escapeHtml(row.note || '')}</td></tr>`).join('');
+        actionsHtml = `<div style="margin-top:10px; border-top:1px dashed #ccc; padding-top:10px;"><strong style="color:#1F4E78;">جدول المعيقات والإجراءات:</strong><table style="width:100%; border-collapse:collapse; margin-top:5px; font-size:11px;"><thead><tr style="background:#f3f4f6;"><th>#</th><th>المعيقات</th><th>الإجراء المطلوب</th><th>ملاحظات</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     }
 
-   let replyHtml = '';
+    let replyHtml = '';
     if (r.managerReply) {
-        replyHtml = `
-            <div style="margin-top:10px; background:#e0f2fe; padding:10px; border-radius:8px; border-right:4px solid #0284c7;">
-                <strong style="color:#0284c7;">💬 رد المدير (مراسلة داخلية):</strong>
-                <p style="margin:5px 0 10px 0; font-size:12px; white-space: pre-wrap;">${escapeHtml(r.managerReply)}</p>
-                
-                <!-- نموذج رد المنسق -->
-                <div style="border-top: 1px dashed #bae6fd; padding-top: 10px; margin-top: 10px;">
-                    <textarea id="coordReply-${idx}" rows="2" placeholder="اكتب توضيحك للمدير هنا..." style="font-size:12px; padding:6px; margin-bottom:5px;"></textarea>
-                    <button onclick="sendReplyToManager('${r.reportNo}', ${idx})" style="background:#0284c7; color:white; border:none; padding:6px 12px; border-radius:6px; font-size:12px; cursor:pointer;">📤 إرسال الرد للمدير</button>
-                </div>
-            </div>
-        `;
+        replyHtml = `<div style="margin-top:10px; background:#e0f2fe; padding:10px; border-radius:8px; border-right:4px solid #0284c7;"><strong style="color:#0284c7;">💬 الردود والملاحظات:</strong><p style="margin:5px 0 0 0; font-size:12px; white-space: pre-wrap;">${escapeHtml(r.managerReply)}</p></div>`;
+    }
+
+    let replyBoxHtml = '';
+    if (isManager) {
+        replyBoxHtml = `<div style="margin-top:10px; border-top:1px solid #cbd5e1; padding-top:10px;"><textarea id="mgrReply-${idx}" rows="2" placeholder="اكتب ردك أو ملاحظتك هنا..." style="font-size:13px; padding:8px; width:100%; box-sizing:border-box; border:1px solid #cbd5e1; border-radius:6px;"></textarea><button onclick="submitManagerReply('${r.reportNo}', ${idx})" style="background:#0284c7; color:white; border:none; padding:8px 12px; border-radius:6px; font-size:13px; cursor:pointer; margin-top:5px; width:100%;">📤 إرسال الرد وحفظه</button></div>`;
     }
 
     return `
-      <div class="report-row" data-idx="${idx}">
-        <div class="rr-head">
-          <div class="rr-no">${escapeHtml(r.reportNo || '—')}</div>
-          <div class="rr-stats">
-            <span class="ok-color">✔ ${itemSummary}</span>
-            <span class="no-color">✘ ${notDone}</span>
-            <span>· ${r.pct || 0}%</span>
-          </div>
-        </div>
-        <div class="rr-meta">
-          <div>📅 ${escapeHtml(r.visitDate || '')} — ${escapeHtml(r.visitName || '')}</div>
-          <div>🏢 ${escapeHtml(r.siteName || '')} — ${escapeHtml(r.projectName || '')}</div>
-        </div>
-        
-        <button class="btn-toggle-details" data-idx="${idx}" style="background:#f1f5f9; border:1px solid #cbd5e1; padding:6px; border-radius:6px; font-size:12px; cursor:pointer; margin-top:5px;">👁️ عرض المعيقات والمراسلات</button>
-        
-        <div id="details-${idx}" style="display:none; margin-top:10px;">
-            ${actionsHtml}
-            ${replyHtml}
-        </div>
-
-        <div class="rr-actions" style="margin-top:10px;">
-          <button class="btn-print" data-action="print" data-idx="${idx}">🖨️ طباعة</button>
-        </div>
+      <div class="report-row" data-idx="${idx}" style="margin-bottom:15px; ${rowColor}">
+        <div class="rr-head"><div class="rr-no">${escapeHtml(r.reportNo || '—')}</div><div class="rr-stats"><span class="ok-color">✔ ${itemSummary}</span><span class="no-color">✘ ${notDone}</span><span>· ${r.pct || 0}%</span></div></div>
+        <div class="rr-meta"><div>📅 ${escapeHtml(r.visitDate || '')} — ${escapeHtml(r.visitName || '')}</div><div>🏢 ${escapeHtml(r.siteName || '')} — ${escapeHtml(r.projectName || '')}</div></div>
+        <button class="btn-toggle-details" data-idx="${idx}" style="background:#f1f5f9; border:1px solid #cbd5e1; padding:6px; border-radius:6px; font-size:12px; cursor:pointer; margin-top:5px;">👁️ عرض التفاصيل والردود</button>
+        <div id="details-${idx}" style="display:none; margin-top:10px;">${actionsHtml}${replyHtml}${replyBoxHtml}</div>
+        <div class="rr-actions" style="margin-top:10px;"><button class="btn-print" data-action="print" data-idx="${idx}">🖨️ طباعة</button></div>
       </div>
     `;
   }).join('');
@@ -847,101 +723,52 @@ function renderResults(reports){
       e.stopPropagation();
       const i = Number(b.dataset.idx);
       const detailsDiv = document.getElementById(`details-${i}`);
-      if (detailsDiv.style.display === 'none') {
-          detailsDiv.style.display = 'block';
-          b.textContent = '🙈 إخفاء التفاصيل';
-      } else {
-          detailsDiv.style.display = 'none';
-          b.textContent = '👁️ عرض المعيقات والمراسلات';
-      }
+      if (detailsDiv.style.display === 'none') { detailsDiv.style.display = 'block'; b.textContent = '🙈 إخفاء التفاصيل'; } else { detailsDiv.style.display = 'none'; b.textContent = '👁️ عرض التفاصيل والردود'; }
     });
   });
 
   box.querySelectorAll('[data-action="print"]').forEach(b=>{
-    b.addEventListener('click', e=>{
-      e.stopPropagation();
-      const i = Number(b.dataset.idx);
-      printReports([reports[i]], false, true);
-    });
+    b.addEventListener('click', e=>{ e.stopPropagation(); const i = Number(b.dataset.idx); printReports([reports[i]], false, true); });
   });
 }
 
+async function submitManagerReply(reportNo, idx) {
+    const textArea = document.getElementById(`mgrReply-${idx}`);
+    const message = textArea.value.trim();
+    if (!message) return toast('يرجى كتابة الرد أولاً');
+    const btn = event.target;
+    btn.textContent = 'جاري الحفظ...'; btn.disabled = true;
+    try {
+        const resp = await fetch(API_URL, { method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify({ action: 'saveManagerReply', reportNo: reportNo, message: message }) });
+        const result = await resp.json();
+        if (result.ok) { toast('✅ تم حفظ الرد بنجاح'); textArea.value = ''; searchReports(false); } else { toast('❌ فشل الحفظ: ' + result.error); }
+    } catch (e) { toast('❌ حدث خطأ في الاتصال'); } finally { btn.textContent = '📤 إرسال الرد وحفظه'; btn.disabled = false; }
+}
+
 function doPrint(){
-  if (!_lastReports.length){
-    searchReports(false).then(()=>{
-      if (_lastReports.length) doPrint();
-      else toast('لا توجد نتائج للطباعة');
-    });
-    return;
-  }
+  if (!_lastReports.length){ searchReports(false).then(()=>{ if (_lastReports.length) doPrint(); else toast('لا توجد نتائج للطباعة'); }); return; }
   const includeItems = document.getElementById('includeItems').checked;
   printReports(_lastReports, includeItems, false);
 }
 
 function printReports(reports, includeItems, single){
   if (!reports.length) return toast('لا توجد بيانات للطباعة');
-
   const center = document.getElementById('filterCenter').value;
   const day    = document.getElementById('filterDay').value;
   const month  = document.getElementById('filterMonth').value;
-
   const batchInfo = !single ? buildBatchHeader(reports.length, center, day, month) : '';
   const html = reports.map(r => buildReportHTML(r, includeItems)).join('');
-
   document.getElementById('printArea').innerHTML = batchInfo + html;
+  setTimeout(()=>{ try { window.print(); } catch(e){ toast('تعذّر فتح الطباعة. استخدم "مشاركة ← طباعة" من المتصفح.'); } }, 100);
+}
 
-  setTimeout(()=>{
-    try { window.print(); }
-    catch(e){ toast('تعذّر فتح الطباعة. استخدم "مشاركة ← طباعة" من المتصفح.'); }
-  }, 100);
-}
-async function sendReplyToManager(reportNo, idx) {
-    const text = document.getElementById(`coordReply-${idx}`).value.trim();
-    if (!text) return toast('يرجى كتابة الرد أولاً');
-    
-    const btn = event.target;
-    btn.textContent = 'جاري الإرسال...';
-    btn.disabled = true;
-    
-    try {
-        const resp = await fetch(API_URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'text/plain;charset=utf-8'},
-            body: JSON.stringify({
-                action: 'replyToManager',
-                reportNo: reportNo,
-                message: text
-            })
-        });
-        const result = await resp.json();
-        
-        if (result.ok) {
-            toast('✅ تم إرسال ردك للمدير بنجاح');
-            document.getElementById(`coordReply-${idx}`).value = ''; // تفريغ المربع
-        } else {
-            toast('❌ فشل الإرسال: ' + result.error);
-        }
-    } catch (e) {
-        toast('❌ حدث خطأ في الاتصال');
-    } finally {
-        btn.textContent = '📤 إرسال الرد للمدير';
-        btn.disabled = false;
-    }
-}
 function buildBatchHeader(count, center, day, month){
   const parts = [`عدد التقارير: ${count}`];
   if (center) parts.push('المركز: ' + center);
   if (day)    parts.push('اليوم: ' + day);
   if (month)  parts.push('الشهر: ' + month);
   const dateStr = new Date().toLocaleDateString('ar-EG');
-  return `
-    <div class="print-page" style="page-break-after:auto;margin-bottom:15px">
-      <div class="print-header">
-        <h1>تقرير زيارات ميدانية</h1>
-        <div class="meta">${escapeHtml(parts.join(' — '))} — تاريخ الطباعة: ${dateStr}</div>
-      </div>
-    </div>
-  `;
+  return `<div class="print-page" style="page-break-after:auto;margin-bottom:15px"><div class="print-header"><h1>تقرير زيارات ميدانية</h1><div class="meta">${escapeHtml(parts.join(' — '))} — تاريخ الطباعة: ${dateStr}</div></div></div>`;
 }
 
 function buildReportHTML(r, includeItems){
@@ -950,118 +777,30 @@ function buildReportHTML(r, includeItems){
   const notDoneCount = items.filter(i=>i.result==='✘').length || Number(r.notDone) || 0;
   const pct = r.pct || 0;
 
-  const infoTable = `
-    <table>
-      <tr>
-        <th style="width:20%">اسم الزائر</th><td>${escapeHtml(r.visitName||'')}</td>
-        <th style="width:20%">الوظيفة</th><td>${escapeHtml(r.visitJob||'')}</td>
-      </tr>
-      <tr>
-        <th>تاريخ الزيارة</th><td>${escapeHtml(r.visitDate||'')}</td>
-        <th>الفترة</th><td>${escapeHtml((r.fromTime||'') + ' → ' + (r.toTime||''))}</td>
-      </tr>
-      <tr>
-        <th>المركز / الموقع</th><td>${escapeHtml(r.siteName||'')}</td>
-        <th>المشروع</th><td>${escapeHtml(r.projectName||'')}</td>
-      </tr>
-      <tr>
-        <th>العنوان</th><td colspan="3">${escapeHtml(r.siteAddress||'')}</td>
-      </tr>
-    </table>
-  `;
+  const infoTable = `<table><tr><th style="width:20%">اسم الزائر</th><td>${escapeHtml(r.visitName||'')}</td><th style="width:20%">الوظيفة</th><td>${escapeHtml(r.visitJob||'')}</td></tr><tr><th>تاريخ الزيارة</th><td>${escapeHtml(r.visitDate||'')}</td><th>الفترة</th><td>${escapeHtml((r.fromTime||'') + ' → ' + (r.toTime||''))}</td></tr><tr><th>المركز / الموقع</th><td>${escapeHtml(r.siteName||'')}</td><th>المشروع</th><td>${escapeHtml(r.projectName||'')}</td></tr><tr><th>العنوان</th><td colspan="3">${escapeHtml(r.siteAddress||'')}</td></tr></table>`;
 
-  const summaryBox = `
-    <div class="print-summary-box">
-      <div><strong>تم</strong><br><span style="font-size:14pt;color:#006100">${doneCount}</span></div>
-      <div><strong>لم يتم</strong><br><span style="font-size:14pt;color:#9C0006">${notDoneCount}</span></div>
-      <div><strong>نسبة البنود</strong><br><span style="font-size:14pt;color:#1F4E78">${pct}%</span></div>
-      <div><strong>الحضور الصباحي</strong><br><span style="font-size:12pt">${escapeHtml(String(r.attAM||0))} / ${escapeHtml(String(r.totalAM||0))}</span><br><span style="color:#006100">(${r.pctAM||0}%)</span></div>
-      <div><strong>الحضور المسائي</strong><br><span style="font-size:12pt">${escapeHtml(String(r.attPM||0))} / ${escapeHtml(String(r.totalPM||0))}</span><br><span style="color:#006100">(${r.pctPM||0}%)</span></div>
-    </div>
-  `;
+  const summaryBox = `<div class="print-summary-box"><div><strong>تم</strong><br><span style="font-size:14pt;color:#006100">${doneCount}</span></div><div><strong>لم يتم</strong><br><span style="font-size:14pt;color:#9C0006">${notDoneCount}</span></div><div><strong>نسبة البنود</strong><br><span style="font-size:14pt;color:#1F4E78">${pct}%</span></div><div><strong>الحضور الصباحي</strong><br><span style="font-size:12pt">${escapeHtml(String(r.attAM||0))} / ${escapeHtml(String(r.totalAM||0))}</span><br><span style="color:#006100">(${r.pctAM||0}%)</span></div><div><strong>الحضور المسائي</strong><br><span style="font-size:12pt">${escapeHtml(String(r.attPM||0))} / ${escapeHtml(String(r.totalPM||0))}</span><br><span style="color:#006100">(${r.pctPM||0}%)</span></div></div>`;
 
   let detailsHTML = '';
   if (includeItems){
-    const itemsArray = ITEMS.map((txt, i) => {
-        const it = items[i] || {result:'', note:''};
-        return { text: txt, result: it.result, note: it.note, index: i };
-    });
-
+    const itemsArray = ITEMS.map((txt, i) => { const it = items[i] || {result:'', note:''}; return { text: txt, result: it.result, note: it.note, index: i }; });
     const order = {'✔': 1, '✘': 2, 'لا ينطبق': 3};
-    itemsArray.sort((a, b) => {
-        const valA = order[a.result] || 4;
-        const valB = order[b.result] || 4;
-        return valA - valB;
-    });
-
-    const rows = itemsArray.map((item) => {
-      const cls = item.result==='✔' ? 'ok-color' : item.result==='✘' ? 'no-color' : '';
-      const display = item.result || '—';
-      return `<tr>
-        <td style="text-align:center;width:5%">${item.index+1}</td>
-        <td>${escapeHtml(item.text)}</td>
-        <td style="text-align:center;width:12%" class="${cls}">${escapeHtml(display)}</td>
-        <td style="width:22%">${escapeHtml(item.note||'')}</td>
-      </tr>`;
-    }).join('');
-
-    detailsHTML = `
-      <div class="section-title">تفاصيل البنود (مرتبة حسب النتيجة)</div>
-      <table>
-        <thead><tr><th>#</th><th>البند</th><th>النتيجة</th><th>ملاحظة</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    `;
+    itemsArray.sort((a, b) => { const valA = order[a.result] || 4; const valB = order[b.result] || 4; return valA - valB; });
+    const rows = itemsArray.map((item) => { const cls = item.result==='✔' ? 'ok-color' : item.result==='✘' ? 'no-color' : ''; const display = item.result || '—'; return `<tr><td style="text-align:center;width:5%">${item.index+1}</td><td>${escapeHtml(item.text)}</td><td style="text-align:center;width:12%" class="${cls}">${escapeHtml(display)}</td><td style="width:22%">${escapeHtml(item.note||'')}</td></tr>`; }).join('');
+    detailsHTML = `<div class="section-title">تفاصيل البنود (مرتبة حسب النتيجة)</div><table><thead><tr><th>#</th><th>البند</th><th>النتيجة</th><th>ملاحظة</th></tr></thead><tbody>${rows}</tbody></table>`;
   }
 
   let extraNotes = '';
   if (r.actionsTable && r.actionsTable.length > 0) {
-      const rows = r.actionsTable.map((row, i) => `
-          <tr>
-            <td style="text-align:center">${i+1}</td>
-            <td>${escapeHtml(row.obs || '')}</td>
-            <td>${escapeHtml(row.act || '')}</td>
-            <td>${escapeHtml(row.note || '')}</td>
-          </tr>
-      `).join('');
-      
-      extraNotes = `
-        <div class="section-title">المعيقات والإجراءات المطلوبة</div>
-        <table>
-          <thead><tr><th style="width:5%">#</th><th style="width:35%">المعيقات</th><th style="width:35%">الإجراء المطلوب</th><th style="width:25%">ملاحظات</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
-      `;
+      const rows = r.actionsTable.map((row, i) => `<tr><td style="text-align:center">${i+1}</td><td>${escapeHtml(row.obs || '')}</td><td>${escapeHtml(row.act || '')}</td><td>${escapeHtml(row.note || '')}</td></tr>`).join('');
+      extraNotes = `<div class="section-title">المعيقات والإجراءات المطلوبة</div><table><thead><tr><th style="width:5%">#</th><th style="width:35%">المعيقات</th><th style="width:35%">الإجراء المطلوب</th><th style="width:25%">ملاحظات</th></tr></thead><tbody>${rows}</tbody></table>`;
   } else {
-      extraNotes = `
-        <div class="section-title">المعيقات والإجراءات المطلوبة</div>
-        <p style="font-size:10pt;">لا يوجد معيقات مسجلة.</p>
-      `;
+      extraNotes = `<div class="section-title">المعيقات والإجراءات المطلوبة</div><p style="font-size:10pt;">لا يوجد معيقات مسجلة.</p>`;
   }
 
-  const footer = `
-    <div class="print-footer">
-      <div>اسم المنسق: ${escapeHtml(r.coordinatorName||'')}</div>
-      <div>التوقيع: ${escapeHtml(r.signature || r.visitName || '_________________')}</div>
-      <div>تاريخ التعبئة: ${escapeHtml(r.reportDate||'')}</div>
-    </div>
-  `;
+  const footer = `<div class="print-footer"><div>اسم المنسق: ${escapeHtml(r.coordinatorName||'')}</div><div>التوقيع: ${escapeHtml(r.signature || r.visitName || '_________________')}</div><div>تاريخ التعبئة: ${escapeHtml(r.reportDate||'')}</div></div>`;
 
-  return `
-    <div class="print-page">
-      <div class="print-header">
-        <h1>تقرير زيارة ميدانية</h1>
-        <div class="meta">رقم التقرير: ${escapeHtml(r.reportNo||'—')} — تاريخ الحفظ: ${escapeHtml(r.savedAt||'')}</div>
-      </div>
-      <div class="section-title">بيانات الزيارة</div>
-      ${infoTable}
-      <div class="section-title">ملخص النتائج</div>
-      ${summaryBox}
-      ${detailsHTML}
-      ${extraNotes}
-      ${footer}
-    </div>
-  `;
+  return `<div class="print-page"><div class="print-header"><h1>تقرير زيارة ميدانية</h1><div class="meta">رقم التقرير: ${escapeHtml(r.reportNo||'—')} — تاريخ الحفظ: ${escapeHtml(r.savedAt||'')}</div></div><div class="section-title">بيانات الزيارة</div>${infoTable}<div class="section-title">ملخص النتائج</div>${summaryBox}${detailsHTML}${extraNotes}${footer}</div>`;
 }
 
 function updateStatus(){
@@ -1076,9 +815,7 @@ window.addEventListener('offline', updateStatus);
 
 function escapeHtml(s){
   if (s == null) return '';
-  return String(s)
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 async function handleLogin() {
@@ -1087,20 +824,12 @@ async function handleLogin() {
   const btn = document.getElementById('btnLogin');
   const err = document.getElementById('loginError');
 
-  if (!user || !pass) {
-    err.textContent = 'يرجى إدخال اسم المستخدم وكلمة المرور';
-    err.style.display = 'block';
-    return;
-  }
+  if (!user || !pass) { err.textContent = 'يرجى إدخال اسم المستخدم وكلمة المرور'; err.style.display = 'block'; return; }
 
   btn.textContent = 'جاري التحقق...'; btn.disabled = true; err.style.display = 'none';
 
   try {
-    const r = await fetch(API_URL, {
-      method: 'POST',
-      headers: {'Content-Type': 'text/plain;charset=utf-8'},
-      body: JSON.stringify({action: 'login', username: user, password: pass})
-    });
+    const r = await fetch(API_URL, { method: 'POST', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify({action: 'login', username: user, password: pass}) });
     const data = await r.json();
 
     if (data.ok) {
@@ -1109,23 +838,16 @@ async function handleLogin() {
       document.getElementById('mainApp').style.display = 'block';
       await initAppLogic();
     } else {
-      err.textContent = data.error;
-      err.style.display = 'block';
+      err.textContent = data.error; err.style.display = 'block';
     }
   } catch (e) {
-    err.textContent = 'فشل الاتصال بالسيرفر. تأكد من الإنترنت.';
-    err.style.display = 'block';
-  } finally {
-    btn.textContent = 'دخول'; btn.disabled = false;
-  }
+    err.textContent = 'فشل الاتصال بالسيرفر. تأكد من الإنترنت.'; err.style.display = 'block';
+  } finally { btn.textContent = 'دخول'; btn.disabled = false; }
 }
 
 async function init(){
   document.getElementById('btnLogin').addEventListener('click', handleLogin);
-  document.getElementById('btnLogout').addEventListener('click', () => {
-      localStorage.removeItem('auth_user');
-      location.reload();
-  });
+  document.getElementById('btnLogout').addEventListener('click', () => { localStorage.removeItem('auth_user'); location.reload(); });
 
   const authStr = localStorage.getItem('auth_user');
   if (authStr) {
@@ -1134,37 +856,33 @@ async function init(){
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('mainApp').style.display = 'block';
       await initAppLogic();
-    } catch(e) {
-      localStorage.removeItem('auth_user');
-    }
+    } catch(e) { localStorage.removeItem('auth_user'); }
   }
 }
 
 async function initAppLogic(){
   try {
     let auth = null;
-    try {
-      const authStr = localStorage.getItem('auth_user');
-      if (authStr) auth = JSON.parse(authStr);
-    } catch (e) {
-      console.warn('خطأ في قراءة جلسة الدخول، سيتم مسحها.');
-      localStorage.removeItem('auth_user');
-      location.reload();
-      return;
-    }
+    try { const authStr = localStorage.getItem('auth_user'); if (authStr) auth = JSON.parse(authStr); } catch (e) { localStorage.removeItem('auth_user'); location.reload(); return; }
 
     if(auth) {
-        document.getElementById('visitName').value = auth.fullName;
-        document.getElementById('coordinatorName').value = auth.fullName;
-        document.getElementById('signature').value = auth.fullName;
-        document.getElementById('currentUserDisplay').textContent = auth.fullName;
+        document.getElementById('currentUserDisplay').textContent = auth.fullName + (auth.role === 'مدير' ? ' (مدير)' : '');
+        
+        if (auth.role === 'مدير') {
+            document.querySelectorAll('.bottom-nav button')[0].style.display = 'none';
+            document.querySelectorAll('.bottom-nav button')[1].style.display = 'none';
+            document.querySelector('.bottom-nav').style.gridTemplateColumns = '1fr';
+            document.getElementById('userBanner').style.background = '#fef3c7'; 
+            document.getElementById('userBanner').querySelector('h2').textContent = '👑 لوحة تحكم المدير - جميع التقارير';
+            switchTab('reports');
+        } else {
+            document.getElementById('visitName').value = auth.fullName;
+            document.getElementById('coordinatorName').value = auth.fullName;
+            document.getElementById('signature').value = auth.fullName;
+        }
     }
 
-    try {
-      await openDB();
-    } catch (dbErr) {
-      console.error("فشل فتح قاعدة البيانات:", dbErr);
-    }
+    try { await openDB(); } catch (dbErr) { console.error("فشل فتح قاعدة البيانات:", dbErr); }
 
     renderItems();
     resetForm();
@@ -1172,10 +890,7 @@ async function initAppLogic(){
     await refreshPending();
     await loadCenters();
 
-    document.querySelectorAll('#bottomNav button').forEach(b=>{
-      b.addEventListener('click', ()=>switchTab(b.dataset.tab));
-    });
-
+    document.querySelectorAll('#bottomNav button').forEach(b=>{ b.addEventListener('click', ()=>switchTab(b.dataset.tab)); });
     document.getElementById('btnSave').addEventListener('click', saveLocal);
     document.getElementById('btnSync').addEventListener('click', syncAll);
     document.getElementById('btnSearch').addEventListener('click', ()=>searchReports(true));
@@ -1186,70 +901,32 @@ async function initAppLogic(){
     document.getElementById('siteName').addEventListener('change', calculateAttendance);
     document.getElementById('attAM').addEventListener('input', calculateAttendance);
     document.getElementById('attPM').addEventListener('input', calculateAttendance);
+    document.getElementById('visitDate').addEventListener('change', calculateAttendance);
 
-    // 🌟 التعديل هنا: استخدام اسم كاش جديد لتجاوز البيانات القديمة
-    try {
-      const cachedSetup = localStorage.getItem(CACHE_KEY_SETUP);
-      if (cachedSetup) {
-        loadSetupData(JSON.parse(cachedSetup));
-      }
-    } catch(e) { console.warn('Failed to load cached setup', e); }
+    try { const cachedSetup = localStorage.getItem(CACHE_KEY_SETUP); if (cachedSetup) loadSetupData(JSON.parse(cachedSetup)); } catch(e) { console.warn('Failed to load cached setup', e); }
 
     if (navigator.onLine){
       try {
-        const r = await fetch(API_URL, {
-          method:'POST',
-          headers:{'Content-Type':'text/plain;charset=utf-8'},
-          body: JSON.stringify({action:'getSetup'})
-        });
+        const r = await fetch(API_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify({action:'getSetup'}) });
         const data = await r.json();
-        if (data.ok) {
-          loadSetupData(data);
-          localStorage.setItem(CACHE_KEY_SETUP, JSON.stringify(data));
-        }
+        if (data.ok) { loadSetupData(data); localStorage.setItem(CACHE_KEY_SETUP, JSON.stringify(data)); }
       } catch(e){ console.warn('setup load failed', e); }
     }
 
     setInterval(()=>{ if (navigator.onLine) syncAll(); }, 60000);
 
   } catch (globalErr) {
-    document.body.innerHTML = `<div style="padding:20px; text-align:center; color:red; direction:rtl;">
-      <h2>حدث خطأ أثناء التشغيل</h2><p>${globalErr.message}</p>
-      <button onclick="location.reload()" style="padding:10px; margin-top:10px;">إعادة المحاولة</button>
-    </div>`;
+    document.body.innerHTML = `<div style="padding:20px; text-align:center; color:red; direction:rtl;"><h2>حدث خطأ أثناء التشغيل</h2><p>${globalErr.message}</p><button onclick="location.reload()" style="padding:10px; margin-top:10px;">إعادة المحاولة</button></div>`;
     console.error(globalErr);
   }
 }
 
 let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  const installBtn = document.getElementById('installBtn');
-  if (installBtn) installBtn.classList.remove('hidden');
-});
-
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; const installBtn = document.getElementById('installBtn'); if (installBtn) installBtn.classList.remove('hidden'); });
 const instBtn = document.getElementById('installBtn');
-if (instBtn) {
-  instBtn.addEventListener('click', async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
-      instBtn.classList.add('hidden');
-    }
-  });
-}
-
-window.addEventListener('appinstalled', () => {
-  const ib = document.getElementById('installBtn');
-  if (ib) ib.classList.add('hidden');
-});
-
-if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-  const ib = document.getElementById('installBtn');
-  if (ib) ib.classList.add('hidden');
-}
+if (instBtn) { instBtn.addEventListener('click', async () => { if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; instBtn.classList.add('hidden'); } }); }
+window.addEventListener('appinstalled', () => { const ib = document.getElementById('installBtn'); if (ib) ib.classList.add('hidden'); });
+if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) { const ib = document.getElementById('installBtn'); if (ib) ib.classList.add('hidden'); }
 
 document.addEventListener('DOMContentLoaded', init);
 </script>
