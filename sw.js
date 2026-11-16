@@ -1,4 +1,4 @@
-const CACHE_NAME = 'visits-v84'; // غير هذا الرقم في كل مرة تعدل الكود
+const CACHE_NAME = 'visits-v86'; // غير هذا الرقم في كل مرة تعدل الكود
 const ASSETS = [
   './',
   './index.html',
