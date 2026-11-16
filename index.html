@@ -890,10 +890,19 @@ async function initAppLogic(){
     await refreshPending();
     await loadCenters();
 
-    document.querySelectorAll('#bottomNav button').forEach(b=>{ b.addEventListener('click', ()=>switchTab(b.dataset.tab)); });
-    document.getElementById('btnSave').addEventListener('click', saveLocal);
-    document.getElementById('btnSync').addEventListener('click', syncAll);
-    document.getElementById('btnSearch').addEventListener('click', ()=>searchReports(true));
+        document.querySelectorAll('#bottomNav button').forEach(b=>{
+      b.addEventListener('click', ()=>switchTab(b.dataset.tab));
+    });
+
+    // ✅ الحل: التحقق من وجود الزر قبل إضافة الحدث
+    const btnSave = document.getElementById('btnSave');
+    if (btnSave) btnSave.addEventListener('click', saveLocal);
+    
+    const btnSync = document.getElementById('btnSync');
+    if (btnSync) btnSync.addEventListener('click', syncAll);
+    
+    const btnSearch = document.getElementById('btnSearch');
+    if (btnSearch) btnSearch.addEventListener('click', ()=>searchReports(true));
     document.getElementById('filterCenter').addEventListener('change', ()=>searchReports(false));
     document.getElementById('filterDay').addEventListener('change', ()=>searchReports(false));
     document.getElementById('filterMonth').addEventListener('change', ()=>searchReports(false));
