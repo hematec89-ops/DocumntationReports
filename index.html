@@ -91,6 +91,40 @@
   .empty{text-align:center;color:#9ca3af;padding:20px;font-size:13px}
   .filter-toggle{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:#374151}
   .filter-toggle input{width:auto;transform:scale(1.2)}
+
+  /* تنسيقات البطاقات الداخلية للتقرير */
+  .report-details-container { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+  
+  .inner-card { background: #fff; border-radius: 8px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; }
+  .inner-card-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; padding-bottom: 6px; border-bottom: 1px dashed #e5e7eb; }
+  
+  .card-done { border-right: 4px solid #166534; background: #f0fdf4; }
+  .card-done .inner-card-title { color: #166534; }
+  
+  .card-notdone { border-right: 4px solid #991b1b; background: #fef2f2; }
+  .card-notdone .inner-card-title { color: #991b1b; }
+  
+  .card-na { border-right: 4px solid #475569; background: #f8fafc; }
+  .card-na .inner-card-title { color: #475569; }
+  
+  .card-actions { border-right: 4px solid #d97706; background: #fffbeb; }
+  .card-actions .inner-card-title { color: #d97706; }
+
+  .card-replies { border-right: 4px solid #0284c7; background: #f0f9ff; }
+  .card-replies .inner-card-title { color: #0284c7; }
+
+  .inner-item-list { margin: 0; padding: 0; list-style: none; }
+  .inner-item-list li { font-size: 13px; color: #374151; margin-bottom: 8px; padding-right: 5px; line-height: 1.5; }
+  .inner-item-list li:last-child { margin-bottom: 0; }
+  .item-note { font-size: 11px; color: #6b7280; display: block; margin-top: 3px; background: #fff; padding: 4px; border-radius: 4px; border: 1px solid #e5e7eb; }
+
+  /* تنسيق إحصائيات الحضور */
+  .attendance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat-box { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 10px; text-align: center; }
+  .stat-box span { display: block; font-size: 12px; color: #6b7280; margin-bottom: 5px; }
+  .stat-box strong { display: block; font-size: 18px; color: #1F4E78; }
+  .stat-box .pct { font-size: 12px; font-weight: bold; color: #059669; margin-top: 3px; display: block; }
+
   #printArea{display:none}
   @media print {
     body{padding:0;margin:0;background:#fff}
@@ -689,46 +723,181 @@ function renderResults(reports){
     const itemSummary = r.items ? r.items.filter(i=>i.result==='✔').length : (r.done || 0);
     const notDone = r.items ? r.items.filter(i=>i.result==='✘').length : (r.notDone || 0);
 
-    const rowColor = (r.managerReply) ? 'background-color: #e6f4ea; border-color: #86efac;' : '';
+    const rowColor = (r.managerReply) ? 'background-color: #f8fafc; border-color: #cbd5e1;' : '';
 
+    // 1. تجهيز عناصر "تم"
+    let doneHtml = '';
+    if (r.items) {
+        const doneList = r.items.filter(i => i.result === '✔');
+        if (doneList.length > 0) {
+            doneHtml = `
+              <div class="inner-card card-done">
+                <div class="inner-card-title">✔ العناصر التي تم التحقق منها (${doneList.length})</div>
+                <ul class="inner-item-list">
+                  ${doneList.map(item => `<li>✅ ${escapeHtml(ITEMS[item.n - 1])} ${item.note ? `<span class="item-note">ملاحظة: ${escapeHtml(item.note)}</span>` : ''}</li>`).join('')}
+                </ul>
+              </div>
+            `;
+        }
+    }
+
+    // 2. تجهيز عناصر "لم يتم"
+    let notDoneHtml = '';
+    if (r.items) {
+        const notDoneList = r.items.filter(i => i.result === '✘');
+        if (notDoneList.length > 0) {
+            notDoneHtml = `
+              <div class="inner-card card-notdone">
+                <div class="inner-card-title">✘ العناصر التي لم يتم التحقق منها (${notDoneList.length})</div>
+                <ul class="inner-item-list">
+                  ${notDoneList.map(item => `<li>❌ ${escapeHtml(ITEMS[item.n - 1])} ${item.note ? `<span class="item-note">ملاحظة: ${escapeHtml(item.note)}</span>` : ''}</li>`).join('')}
+                </ul>
+              </div>
+            `;
+        }
+    }
+
+    // 3. تجهيز عناصر "لا ينطبق"
+    let naHtml = '';
+    if (r.items) {
+        const naList = r.items.filter(i => i.result === 'لا ينطبق' || !i.result);
+        if (naList.length > 0) {
+            naHtml = `
+              <div class="inner-card card-na">
+                <div class="inner-card-title">— العناصر التي لا تنطبق (${naList.length})</div>
+                <ul class="inner-item-list">
+                  ${naList.map(item => `<li>➖ ${escapeHtml(ITEMS[item.n - 1])} ${item.note ? `<span class="item-note">ملاحظة: ${escapeHtml(item.note)}</span>` : ''}</li>`).join('')}
+                </ul>
+              </div>
+            `;
+        }
+    }
+
+    // 4. تجهيز إحصائيات الحضور
+    const attendanceHtml = `
+      <div class="inner-card" style="border-right: 4px solid #1F4E78;">
+        <div class="inner-card-title" style="color:#1F4E78;">📊 إحصائيات الحضور</div>
+        <div class="attendance-grid">
+          <div class="stat-box">
+            <span>الفترة الصباحية</span>
+            <strong>${escapeHtml(String(r.attAM||0))} / ${escapeHtml(String(r.totalAM||0))}</strong>
+            <span class="pct">النسبة: ${r.pctAM||0}%</span>
+          </div>
+          <div class="stat-box">
+            <span>الفترة المسائية</span>
+            <strong>${escapeHtml(String(r.attPM||0))} / ${escapeHtml(String(r.totalPM||0))}</strong>
+            <span class="pct">النسبة: ${r.pctPM||0}%</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // 5. تجهيز جدول المعيقات
     let actionsHtml = '';
     if (r.actionsTable && r.actionsTable.length > 0) {
-        const rows = r.actionsTable.map((row, i) => `<tr><td style="border:1px solid #ccc; padding:4px; text-align:center;">${i+1}</td><td style="border:1px solid #ccc; padding:4px;">${escapeHtml(row.obs || '')}</td><td style="border:1px solid #ccc; padding:4px;">${escapeHtml(row.act || '')}</td><td style="border:1px solid #ccc; padding:4px;">${escapeHtml(row.note || '')}</td></tr>`).join('');
-        actionsHtml = `<div style="margin-top:10px; border-top:1px dashed #ccc; padding-top:10px;"><strong style="color:#1F4E78;">جدول المعيقات والإجراءات:</strong><table style="width:100%; border-collapse:collapse; margin-top:5px; font-size:11px;"><thead><tr style="background:#f3f4f6;"><th>#</th><th>المعيقات</th><th>الإجراء المطلوب</th><th>ملاحظات</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+        const rows = r.actionsTable.map((row, i) => `
+            <tr>
+              <td style="border:1px solid #e5e7eb; padding:6px; text-align:center;">${i+1}</td>
+              <td style="border:1px solid #e5e7eb; padding:6px;">${escapeHtml(row.obs || '')}</td>
+              <td style="border:1px solid #e5e7eb; padding:6px;">${escapeHtml(row.act || '')}</td>
+              <td style="border:1px solid #e5e7eb; padding:6px;">${escapeHtml(row.note || '')}</td>
+            </tr>
+        `).join('');
+        
+        actionsHtml = `
+          <div class="inner-card card-actions">
+            <div class="inner-card-title">⚠️ المعيقات والصعوبات والحلول</div>
+            <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; font-size:11px;">
+                  <thead><tr style="background:#fef3c7;"><th style="border:1px solid #e5e7eb; padding:6px;">#</th><th style="border:1px solid #e5e7eb; padding:6px;">المعيقات</th><th style="border:1px solid #e5e7eb; padding:6px;">الإجراء المطلوب</th><th style="border:1px solid #e5e7eb; padding:6px;">ملاحظات</th></tr></thead>
+                  <tbody>${rows}</tbody>
+                </table>
+            </div>
+          </div>
+        `;
     }
 
+    // 6. تجهيز الردود
     let replyHtml = '';
     if (r.managerReply) {
-        replyHtml = `<div style="margin-top:10px; background:#e0f2fe; padding:10px; border-radius:8px; border-right:4px solid #0284c7;"><strong style="color:#0284c7;">💬 الردود والملاحظات:</strong><p style="margin:5px 0 0 0; font-size:12px; white-space: pre-wrap;">${escapeHtml(r.managerReply)}</p></div>`;
+        replyHtml = `
+            <div class="inner-card card-replies">
+                <div class="inner-card-title">💬 الردود والملاحظات</div>
+                <p style="margin:0; font-size:12px; color:#0c4a6e; white-space: pre-wrap; line-height:1.6;">${escapeHtml(r.managerReply)}</p>
+            </div>
+        `;
     }
 
+    // 7. تجهيز مربع رد المدير (إذا كان المستخدم مديراً)
     let replyBoxHtml = '';
     if (isManager) {
-        replyBoxHtml = `<div style="margin-top:10px; border-top:1px solid #cbd5e1; padding-top:10px;"><textarea id="mgrReply-${idx}" rows="2" placeholder="اكتب ردك أو ملاحظتك هنا..." style="font-size:13px; padding:8px; width:100%; box-sizing:border-box; border:1px solid #cbd5e1; border-radius:6px;"></textarea><button onclick="submitManagerReply('${r.reportNo}', ${idx})" style="background:#0284c7; color:white; border:none; padding:8px 12px; border-radius:6px; font-size:13px; cursor:pointer; margin-top:5px; width:100%;">📤 إرسال الرد وحفظه</button></div>`;
+        replyBoxHtml = `
+            <div style="margin-top:10px; border-top:1px solid #cbd5e1; padding-top:10px;">
+                <textarea id="mgrReply-${idx}" rows="2" placeholder="اكتب ردك أو ملاحظتك هنا..." style="font-size:13px; padding:8px; width:100%; box-sizing:border-box; border:1px solid #cbd5e1; border-radius:6px;"></textarea>
+                <button onclick="submitManagerReply('${r.reportNo}', ${idx})" style="background:#0284c7; color:white; border:none; padding:8px 12px; border-radius:6px; font-size:13px; cursor:pointer; margin-top:5px; width:100%;">📤 إرسال الرد وحفظه</button>
+            </div>
+        `;
     }
 
     return `
       <div class="report-row" data-idx="${idx}" style="margin-bottom:15px; ${rowColor}">
-        <div class="rr-head"><div class="rr-no">${escapeHtml(r.reportNo || '—')}</div><div class="rr-stats"><span class="ok-color">✔ ${itemSummary}</span><span class="no-color">✘ ${notDone}</span><span>· ${r.pct || 0}%</span></div></div>
-        <div class="rr-meta"><div>📅 ${escapeHtml(r.visitDate || '')} — ${escapeHtml(r.visitName || '')}</div><div>🏢 ${escapeHtml(r.siteName || '')} — ${escapeHtml(r.projectName || '')}</div></div>
-        <button class="btn-toggle-details" data-idx="${idx}" style="background:#f1f5f9; border:1px solid #cbd5e1; padding:6px; border-radius:6px; font-size:12px; cursor:pointer; margin-top:5px;">👁️ عرض التفاصيل والردود</button>
-        <div id="details-${idx}" style="display:none; margin-top:10px;">${actionsHtml}${replyHtml}${replyBoxHtml}</div>
-        <div class="rr-actions" style="margin-top:10px;"><button class="btn-print" data-action="print" data-idx="${idx}">🖨️ طباعة</button></div>
+        <div class="rr-head">
+          <div class="rr-no">${escapeHtml(r.reportNo || '—')}</div>
+          <div class="rr-stats">
+            <span class="ok-color">✔ ${itemSummary}</span>
+            <span class="no-color">✘ ${notDone}</span>
+            <span>· ${r.pct || 0}%</span>
+          </div>
+        </div>
+        <div class="rr-meta">
+          <div>📅 ${escapeHtml(r.visitDate || '')} — ${escapeHtml(r.visitName || '')}</div>
+          <div>🏢 ${escapeHtml(r.siteName || '')} — ${escapeHtml(r.projectName || '')}</div>
+        </div>
+        
+        <button class="btn-toggle-details" data-idx="${idx}" style="background:#f1f5f9; border:1px solid #cbd5e1; padding:8px; border-radius:6px; font-size:13px; font-weight:bold; color:#1F4E78; cursor:pointer; margin-top:10px;">👁️ عرض تفاصيل التقرير الكاملة</button>
+        
+        <div id="details-${idx}" style="display:none;">
+            <div class="report-details-container">
+                ${attendanceHtml}
+                ${doneHtml}
+                ${notDoneHtml}
+                ${naHtml}
+                ${actionsHtml}
+                ${replyHtml}
+                ${replyBoxHtml}
+            </div>
+        </div>
+
+        <div class="rr-actions" style="margin-top:10px;">
+          <button class="btn-print" data-action="print" data-idx="${idx}">🖨️ طباعة</button>
+        </div>
       </div>
     `;
   }).join('');
 
+  // تفعيل أزرار عرض التفاصيل
   box.querySelectorAll('.btn-toggle-details').forEach(b=>{
     b.addEventListener('click', e=>{
       e.stopPropagation();
       const i = Number(b.dataset.idx);
       const detailsDiv = document.getElementById(`details-${i}`);
-      if (detailsDiv.style.display === 'none') { detailsDiv.style.display = 'block'; b.textContent = '🙈 إخفاء التفاصيل'; } else { detailsDiv.style.display = 'none'; b.textContent = '👁️ عرض التفاصيل والردود'; }
+      if (detailsDiv.style.display === 'none') {
+          detailsDiv.style.display = 'block';
+          b.textContent = '🙈 إخفاء التفاصيل';
+      } else {
+          detailsDiv.style.display = 'none';
+          b.textContent = '👁️ عرض تفاصيل التقرير الكاملة';
+      }
     });
   });
 
+  // تفعيل أزرار الطباعة
   box.querySelectorAll('[data-action="print"]').forEach(b=>{
-    b.addEventListener('click', e=>{ e.stopPropagation(); const i = Number(b.dataset.idx); printReports([reports[i]], false, true); });
+    b.addEventListener('click', e=>{
+      e.stopPropagation();
+      const i = Number(b.dataset.idx);
+      printReports([reports[i]], false, true);
+    });
   });
 }
 
@@ -890,11 +1059,9 @@ async function initAppLogic(){
     await refreshPending();
     await loadCenters();
 
-        document.querySelectorAll('#bottomNav button').forEach(b=>{
-      b.addEventListener('click', ()=>switchTab(b.dataset.tab));
-    });
+    document.querySelectorAll('#bottomNav button').forEach(b=>{ b.addEventListener('click', ()=>switchTab(b.dataset.tab)); });
 
-    // ✅ الحل: التحقق من وجود الزر قبل إضافة الحدث
+    // ✅ الحل: التحقق من وجود الزر قبل إضافة الحدث لتجنب إغلاق التطبيق
     const btnSave = document.getElementById('btnSave');
     if (btnSave) btnSave.addEventListener('click', saveLocal);
     
@@ -903,6 +1070,7 @@ async function initAppLogic(){
     
     const btnSearch = document.getElementById('btnSearch');
     if (btnSearch) btnSearch.addEventListener('click', ()=>searchReports(true));
+    
     document.getElementById('filterCenter').addEventListener('change', ()=>searchReports(false));
     document.getElementById('filterDay').addEventListener('change', ()=>searchReports(false));
     document.getElementById('filterMonth').addEventListener('change', ()=>searchReports(false));
